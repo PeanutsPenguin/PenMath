@@ -1,9 +1,6 @@
 #PenMath RootCmake
 cmake_minimum_required(VERSION 3.24 FATAL_ERROR) # PATH_EQUAL
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
 get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 project(${PROJECT_NAME} LANGUAGES CXX)
 

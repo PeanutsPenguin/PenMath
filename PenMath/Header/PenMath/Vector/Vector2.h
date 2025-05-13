@@ -30,6 +30,45 @@ namespace PenMath
 		~Vector(void) = default;						//Default destructor (yes it's in the constructors category)
 		/*****CONSTRUCTORS*****/
 
+		/*****Basic Vector2*****/
+		
+		/// <summary>
+		/// //Return a vector (0, 0)
+		/// </summary>
+		/// <returns>(0, 0)</returns>
+		static Vector<2, int>	Zero(void);			
+
+		/// <summary>
+		/// //Return a vector (1, 1)
+		/// </summary>
+		/// <returns>(1, 1)</returns>
+		static Vector<2, int>	One(void);			
+		
+		/// <summary>
+		/// //Return a vector (0, 1)
+		/// </summary>
+		/// <returns>(0, 1)</returns>
+		static Vector<2, int>	Up(void);			
+
+		/// <summary>
+		/// //Return a vector (0, -1)
+		/// </summary>
+		/// <returns>(0, -1)</returns>
+		static Vector<2, int>	Down(void);			
+
+		/// <summary>
+		/// //Return a vector (-1, 0)
+		/// </summary>
+		/// <returns>(-1, 0)</returns>
+		static Vector<2, int>	Left(void);			
+
+		/// <summary>
+		/// //Return a vector (0, 1)
+		/// </summary>
+		/// <returns>(0, 1)</returns>
+		static Vector<2, int>	Right(void);		
+		/*****Basic Vector2*****/
+
 		_Type x;
 		_Type y;
 	};

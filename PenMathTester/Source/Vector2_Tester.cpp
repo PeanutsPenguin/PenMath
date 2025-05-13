@@ -45,5 +45,4 @@ TEST_CASE("Vector2", "[.all][vector][Vector2]")
 		// OpenGL compatibility
 		CHECK(sizeof PenMath::Vector2f == sizeof glm::vec2);
 	}
-
 }

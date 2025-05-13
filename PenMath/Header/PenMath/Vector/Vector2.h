@@ -25,7 +25,7 @@ namespace PenMath
 		Vector(_Type valueA, _Type valueB);				
 
 		Vector(const Vector<2, _Type>&) = default;		//Default copy constructors 
-		Vector(const Vector<2, _Type>&&) = default;		//Default move constructors
+		Vector(Vector<2, _Type>&&)		= default;		//Default move constructors
 
 		~Vector(void) = default;						//Default destructor (yes it's in the constructors category)
 		/*****CONSTRUCTORS*****/
@@ -33,6 +33,9 @@ namespace PenMath
 		_Type x;
 		_Type y;
 	};
+
+
+	using Vector2f = typename Vector<2, float>;
 }
 
 #include <Vector/Vector2.hpp>

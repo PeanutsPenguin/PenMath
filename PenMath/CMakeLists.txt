@@ -31,7 +31,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TARGET_FILES}) # generate 
 #Static library
 add_library(${TARGET_NAME} STATIC)
 target_sources(${TARGET_NAME} PRIVATE ${TARGET_FILES})
-target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Header)
+target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Header/PenMath)
 
 #Exposed variables
 set(PENMATH_LIBRARY ${TARGET_NAME} PARENT_SCOPE)

@@ -1,4 +1,5 @@
-#include "Angle/Degree.h"
+#include <Angle/Degree.h>
+#include <Trigonometry.h>
 
 using namespace PenMath;
 
@@ -142,8 +143,7 @@ float Degree::raw() const
 
 float Degree::radian() const
 {
-	//TODO Define pi value in future arithmetic file
-	return this->m_value * 3.141592653589793f / 180;
+	return this->m_value * c_pi / 180;
 }
 
 #pragma endregion

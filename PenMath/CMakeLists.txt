@@ -28,10 +28,38 @@ list(FILTER TARGET_SOURCE_FILES EXCLUDE REGEX ${CMAKE_CURRENT_BINARY_DIR})
 set(TARGET_FILES ${TARGET_HEADER_FILES} ${TARGET_SOURCE_FILES})
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TARGET_FILES}) # generate visual studio filter
 
+
 #Static library
 add_library(${TARGET_NAME} STATIC)
 target_sources(${TARGET_NAME} PRIVATE ${TARGET_FILES})
-target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Header/PenMath)
+
+
+target_include_directories(${TARGET_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/Header)
+
+
+function(add_source_group_dir path)
+  set(headerDir "${CMAKE_CURRENT_SOURCE_DIR}/Header/${path}")
+  set(sourceDir "${CMAKE_CURRENT_SOURCE_DIR}/Source/${path}")
+  file(GLOB headerFiles LIST_DIRECTORIES false "${headerDir}/*")
+  file(GLOB sourceFiles LIST_DIRETORIES false "${sourceDir}/*")
+
+  source_group("${path}/Header" FILES ${headerFiles})
+  source_group("${path}/Source" FILES ${sourceFiles})
+
+  file(GLOB children RELATIVE "${headerDir}" "${headerDir}/*")
+  foreach(child ${children})
+    if(IS_DIRECTORY "${headerDir}/${child}")
+      add_source_group_dir("${path}/${child}")
+    endif()
+  endforeach()
+endfunction()
+
+file(GLOB children RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/Header" "${CMAKE_CURRENT_SOURCE_DIR}/Header/*")
+foreach(child ${children})
+  if(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Header/${child}")
+    add_source_group_dir("${child}")
+  endif()
+endforeach()
 
 #Exposed variables
 set(PENMATH_LIBRARY ${TARGET_NAME} PARENT_SCOPE)

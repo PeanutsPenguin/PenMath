@@ -77,6 +77,7 @@ namespace PenMath
 		/// </summary>
 		float radian() const;
 #pragma endregion
+	
 	private:
 		float m_value = 0;
 	};

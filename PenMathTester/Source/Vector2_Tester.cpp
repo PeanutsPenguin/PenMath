@@ -3,13 +3,14 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>
 
-#include <glm/glm.hpp>
-#include <glm/vec2.hpp>
-
 #define GLM_ENABLE_EXPERIMENTAL
 #define GLM_FORCE_SILENT_WARNINGS
 #define GLM_FORCE_XYZW_ONLY
-
+#include <glm/glm.hpp>
+#include <glm/gtx/euler_angles.hpp>
+#include <glm/gtx/projection.hpp>
+#include <glm/gtx/transform.hpp>
+#include <glm/gtx/vector_angle.hpp>
 #define CHECK_VECTOR2(vector, vectorGlm) CHECK(vector.x == Catch::Approx(vectorGlm.x)); CHECK(vector.y == Catch::Approx(vectorGlm.y));
 
 using namespace PenMath;
@@ -81,7 +82,6 @@ TEST_CASE("Vector2", "[.all][vector][Vector2]")
 		}
 	}
 
-
 	SECTION("Comparator")
 	{
 		// compare with self
@@ -117,7 +117,7 @@ TEST_CASE("Vector2", "[.all][vector][Vector2]")
 
 		glm::vec2 const smallGlm{ 2.5f, .5f };
 		glm::vec2 const bigGlm{ 3.75f, 3.f };
-
+			
 		SECTION("Addition")
 		{
 			{
@@ -209,6 +209,101 @@ TEST_CASE("Vector2", "[.all][vector][Vector2]")
 			glm::vec2 oppositeGlm = -glm::vec2{ 3.7f, 3.f };
 
 			CHECK_VECTOR2(opposite, oppositeGlm);
+		}
+	}
+
+	SECTION("Functionality")
+	{
+		Vector2f const base{ 2.5f, .5f };
+		Vector2f const other{ 3.75f, 3.f };
+
+		glm::vec2 const baseGlm{ 2.5f, .5f };
+		glm::vec2 const otherGlm{ 3.75f, 3.f };
+
+		SECTION("Cross")
+		{
+			glm::vec3 const baseGlm3{ 2.5f, .5f, 0.f };
+			glm::vec3 const otherGlm3{ 3.75f, 3.f, 0.f };
+
+			float cross = Vector2f::cross(base, other);
+
+			float crossGlm = glm::cross(baseGlm3, otherGlm3).z;
+
+			CHECK(cross == crossGlm);
+		}
+
+		SECTION("Dot")
+		{
+			float dot = Vector2f::dot(base, other);
+
+			float dotGlm = glm::dot(baseGlm, otherGlm);
+
+			CHECK(dot == dotGlm);
+		}
+
+		SECTION("Distance")
+		{
+			{
+				float distance = Vector2f::distance(base, other);
+
+				float distanceGlm = glm::distance(baseGlm, otherGlm);
+
+				CHECK(distance == Catch::Approx(distanceGlm));
+			}
+
+			{
+				float distanceSquare = Vector2f::distanceSquared(base, other);
+
+				float distanceSquareGlm = glm::distance2(baseGlm, otherGlm);
+
+				CHECK(distanceSquare == Catch::Approx(distanceSquareGlm));
+			}
+		}
+
+		SECTION("Magnitude")
+		{
+			{
+				float magnitude = base.magnitude();
+
+				float magnitudeGlm = glm::length(baseGlm);
+
+				CHECK(magnitude == Catch::Approx(magnitudeGlm));
+			}
+
+			{
+				float magnitudeSquare = base.magnitudeSquared();
+
+				float magnitudeSquareGlm = glm::length2(baseGlm);
+
+				CHECK(magnitudeSquare == Catch::Approx(magnitudeSquareGlm));
+			}
+		}
+
+		SECTION("Normal")
+		{
+			Vector2f normalize = Vector2f::normal(base);
+
+			glm::vec2 normalizeGlm = glm::normalize(baseGlm);
+
+			CHECK_VECTOR2(normalize, normalizeGlm);
+		}
+
+		SECTION("ProjectOnto")
+		{
+			Vector2f project = Vector2f::project(base, other);
+
+			glm::vec2 projectGlm = glm::proj(baseGlm, otherGlm);
+
+			CHECK_VECTOR2(project, projectGlm);
+		}
+
+		SECTION("ReflectOnto")
+		{
+			Vector2f reflect = Vector2f::reflect(base, other);
+
+			glm::vec2 reflectGlm = glm::reflect(baseGlm, glm::normalize(otherGlm));
+
+			CHECK_VECTOR2(reflect, reflectGlm);
 		}
 	}
 }

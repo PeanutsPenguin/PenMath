@@ -1,13 +1,12 @@
-#pragma once
+#pragma once 
 
-#include "Vector/VectorBase.h"
-
+#include <Vector/VectorBase.h>
 namespace PenMath
 {
 	template<typename _Type>
 	struct Vector<2, _Type>
 	{
-		/*****CONSTRUCTORS*****/
+#pragma region CONSTRUCTORS
 		Vector(void);									//Empty constructor							
 
 		/// <summary>
@@ -27,10 +26,9 @@ namespace PenMath
 		Vector(Vector<2, _Type>&&)		= default;		//Default move constructors
 
 		~Vector(void) = default;						//Default destructor (yes it's in the constructors category)
-		/*****CONSTRUCTORS*****/
+#pragma endregion
 
-
-		/*****Basic Vector2*****/
+#pragma region BASIC_VEC2
 		/// <summary>
 		/// //Return a vector (0, 0)
 		/// </summary>
@@ -66,10 +64,9 @@ namespace PenMath
 		/// </summary>
 		/// <returns>(0, 1)</returns>
 		static Vector<2, int>	Right(void);
-		/*****Basic Vector2*****/
+#pragma endregion
 
-
-		/*****Operators*****/
+#pragma region OPERATOR_VEC2
 		Vector<2, _Type>&	operator=(const Vector<2, _Type>&)		= default;			//Default operator = to assign values of another vector
 
 		Vector<2, _Type>&	operator=(Vector<2, _Type>&&)			= default;			//Default operator = to move another vector into this on	
@@ -96,25 +93,25 @@ namespace PenMath
 
 		Vector<2, _Type>&	operator--(void);											// Operator -- for Vector2, Decrease by one all elements in vector 
 
-		Vector<2, _Type>	operator+(const Vector<2, _Type>& toAdd) const;				//Operator + for Vector2
+		Vector<2, _Type>	operator+(const Vector<2, _Type>&) const;					//Operator + for Vector2
 
-		Vector<2, _Type>&	operator+=(const Vector<2, _Type>& toAdd);					// Operator += for Vector2
+		Vector<2, _Type>&	operator+=(const Vector<2, _Type>&);						// Operator += for Vector2
 
-		Vector<2, _Type>	operator+(_Type toAdd) const;								//Operator + for a single value
+		Vector<2, _Type>	operator+(_Type) const;										//Operator + for a single value
 
-		Vector<2, _Type>&	operator+=(_Type toAdd);									// Operator += for a single value
+		Vector<2, _Type>&	operator+=(_Type);											// Operator += for a single value
 
-		Vector<2, _Type>	operator-(const Vector<2, _Type>& toSubtract) const;		//Operator - for Vector2
+		Vector<2, _Type>	operator-(const Vector<2, _Type>&) const;					//Operator - for Vector2
 
-		Vector<2, _Type>&	operator-=(const Vector<2, _Type>& toSubtract);				//Operator -= for Vector2
+		Vector<2, _Type>&	operator-=(const Vector<2, _Type>&);						//Operator -= for Vector2
 
-		Vector<2, _Type>	operator-(_Type toSubtract) const;							//Operator - for a single value
+		Vector<2, _Type>	operator-(_Type) const;										//Operator - for a single value
 
-		Vector<2, _Type>&	operator-=(_Type toSubtract);								//Operator -= for a single value
+		Vector<2, _Type>&	operator-=(_Type);											//Operator -= for a single value
 
-		Vector<2, _Type>	operator*(const Vector<2, _Type>& toMultiply) const;		//Operator * to multiply by vector 2 to the current one
+		Vector<2, _Type>	operator*(const Vector<2, _Type>&) const;					//Operator * to multiply by vector 2 to the current one
 
-		Vector<2, _Type>&	operator*=(const Vector<2, _Type>& toMultiply);				//Operator *= for Vector2
+		Vector<2, _Type>&	operator*=(const Vector<2, _Type>&);						//Operator *= for Vector2
 
 		Vector<2, _Type>	operator*(_Type) const;										//Operator * to multiply by a constant
 
@@ -126,10 +123,84 @@ namespace PenMath
 
 		Vector<2, _Type>	operator/(_Type) const;										//Operator / to divide by a constant
 
-		Vector<2, _Type>&	operator/=(_Type);											//Operator /= to divide by a constant
-		/*****Operators*****/
+		Vector<2, _Type>&	operator/=(_Type);											//Operator /= to divide by a constantR
+#pragma endregion
+		
+#pragma region FUNC
+		_Type	magnitude(void) const;													//Return the magnitude of the vector
 
+		_Type	magnitudeSquared(void) const;											//Return the squared magnitude of the vector
 
+		/// <summary>
+		/// Normalize this vector (divide by its magnitude)
+		/// </summary>
+		/// <param name=""></param>
+		void	normalize(void);
+
+		/// <summary>
+		/// Return the dot product with the Vec2 in parameter
+		/// </summary>
+		_Type				dot(const Vector<2, _Type>&) const;
+
+		/// <summary>
+		/// Return the cross product with the Vec2 in parameter
+		/// </summary>
+		_Type				cross(const Vector<2, _Type>&) const;
+
+		/// <summary>
+		/// Return the projection of this vector on the one in parameter
+		/// </summary>
+		Vector<2, _Type>	project(const Vector<2, _Type>&) const;
+
+		/// <summary>
+		/// Return the projection of this vector on the one in parameter
+		/// </summary>
+		Vector<2, _Type>	reflect(const Vector<2, _Type>&) const;
+#pragma endregion
+
+#pragma region STATIC_FUNC
+		/// <summary>
+		/// Returns distance between two Vec2 
+		/// </summary>
+		static _Type				distance(const Vector<2, _Type>&, const Vector<2, _Type>&);
+
+		/// <summary>
+		/// Returns distance squared between two Vec2 (bypass the sqrt of the distance() function)
+		/// </summary>
+		static _Type				distanceSquared(const Vector<2, _Type>&, const Vector<2, _Type>&);
+
+		/// <summary>
+		/// Returns true if the vector is unit
+		/// </summary>
+		static bool					isUnit(const Vector<2, _Type>&);
+
+		/// <summary>
+		/// Return the normal vector of the vector in parameter
+		/// </summary>
+		static Vector<2, _Type>		normal(const Vector<2, _Type>&);
+
+		/// <summary>
+		/// Return the dot product between two Vec2
+		/// </summary>
+		static _Type				dot(const Vector<2, _Type>&, const Vector<2, _Type>&);	
+
+		/// <summary>
+		/// Return the cross product between two Vec2
+		/// </summary>
+		static _Type				cross(const Vector<2, _Type>&, const Vector<2, _Type>&);
+
+		/// <summary>
+		/// Project the first vector on the other
+		/// </summary>
+		static Vector<2, _Type>		project(const Vector<2, _Type>&, const Vector<2, _Type>&);
+
+		/// <summary>
+		/// Project the first vector on the other
+		/// </summary>
+		static Vector<2, _Type>		reflect(const Vector<2, _Type>&, const Vector<2, _Type>&);
+#pragma endregion
+
+//TO DO ANGLE 
 		_Type x;
 		_Type y;
 	};
@@ -140,5 +211,4 @@ namespace PenMath
 }
 
 //TODO CONVERTION OPERATOR FOR BASIC TYPE
-
 #include <Vector/Vector2.hpp>

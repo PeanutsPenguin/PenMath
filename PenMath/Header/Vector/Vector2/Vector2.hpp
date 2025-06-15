@@ -1,5 +1,5 @@
 #pragma once
-#include <Vector/Vector2.h>
+#include <Vector/Vector2/Vector2.h>
 #include <Arithmetic.h>
 
 #if defined(VECTOR2_ANGLE)
@@ -381,7 +381,6 @@ namespace PenMath
 
 #endif
 	#pragma endregion
-
 
 #if defined(VECTOR2_DEBUG)
 	TEMPLATE

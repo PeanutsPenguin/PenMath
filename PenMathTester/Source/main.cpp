@@ -10,10 +10,12 @@ int main(int argc, char* argv[])
 	}
 
 	///TEST GLOBAL FUNCTIONS
-	arguments.push_back("Vector2,");
+	//arguments.push_back("Vector2,");
+	arguments.push_back("Vector3,");
 	//arguments.push_back("Degree,");
 	//arguments.push_back("Arithmetic,");
 	//arguments.push_back("[Angle],");
+
 
 
 

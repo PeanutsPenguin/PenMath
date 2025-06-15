@@ -1,6 +1,6 @@
 //#define VECTOR2_ANGLE
 //#define VECTOR2_DEBUG
-#include <Vector/Vector2.h>
+#include <Vector/Vector2/Vector2.h>
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/catch_approx.hpp>

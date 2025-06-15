@@ -141,7 +141,6 @@ namespace PenMath
 		/// <summary>
 		/// Normalize this vector (divide by its magnitude)
 		/// </summary>
-		/// <param name=""></param>
 		void				normalize(void);
 
 		/// <summary>
@@ -231,4 +230,4 @@ namespace PenMath
 }
 
 //TODO CONVERTION OPERATOR FOR BASIC TYPE
-#include <Vector/Vector2.hpp>
+#include <Vector/Vector2/Vector2.hpp>

@@ -1,5 +1,11 @@
 #pragma once
 #include <Vector/Vector2.h>
+#include <Arithmetic.h>
+
+#if defined(VECTOR2_ANGLE)
+	#include <Angle/Radian.h>
+	#include <cmath>
+#endif
 
 #define TEMPLATE template<typename _Type>
 #define VEC2 Vector<2, _Type>
@@ -298,7 +304,7 @@ namespace PenMath
 	}
 	#pragma endregion
 
-#pragma region STATIC_FUNC
+	#pragma region STATIC_FUNC
 	TEMPLATE
 	_Type VEC2::distance(const VEC2& vecA, const VEC2& vecB)
 	{
@@ -314,8 +320,7 @@ namespace PenMath
 	TEMPLATE
 	bool VEC2::isUnit(const VEC2& vec)
 	{
-		//TODO almostequal()
-		return  vec.Magnitude() == _Type(1);
+		return  almostEqual(this->Magnitude(), _Type(1));
 	}
 
 	TEMPLATE
@@ -350,4 +355,43 @@ namespace PenMath
 	}
 
 #pragma endregion
+
+	#pragma region ANGLE
+#if defined(VECTOR2_ANGLE)
+
+	TEMPLATE
+	inline Radian VEC2::angle(const Vector<2, _Type>& vecA, const Vector<2, _Type>& vecB)
+	{
+		return Radian(std::acos(VEC2::dot(VEC2::normal(vecA), VEC2::normal(vecB))));
+	}
+
+	TEMPLATE
+	Radian VEC2::angle(const VEC2& vecA, const VEC2& vecB, const VEC2& vecC)
+	{
+		float pointa = vecB.x - vecA.x;
+		float pointb = vecB.y - vecA.y;
+		float pointc = vecB.x - vecC.x;
+		float pointd = vecB.y - vecC.y;
+
+		Radian atanA = std::atan2(pointa, pointb);
+		Radian atanB = std::atan2(pointc, pointd);
+
+		return atanB - atanA;
+	}
+
+#endif
+	#pragma endregion
+
+
+#if defined(VECTOR2_DEBUG)
+	TEMPLATE
+	std::ostream& operator<<(std::ostream& os, const VEC2& vec)
+	{
+		os << "Vector2 : ";
+		os << "{" << vec.x;
+		os << ", " << vec.y << "}";
+		return os;
+	}
+#endif
+
 }

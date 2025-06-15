@@ -1,8 +1,15 @@
 #pragma once 
 
 #include <Vector/VectorBase.h>
+
+#if defined(VECTOR2_DEBUG)
+#include <ostream>
+#endif
+
 namespace PenMath
 {
+	class Radian;
+
 	template<typename _Type>
 	struct Vector<2, _Type>
 	{
@@ -71,9 +78,9 @@ namespace PenMath
 
 		Vector<2, _Type>&	operator=(Vector<2, _Type>&&)			= default;			//Default operator = to move another vector into this on	
 
-		_Type&				operator[](size_t index);									//Operator [] to acces values 
+		_Type&				operator[](size_t index);									//Operator [] to access values 
 
-		const _Type&		operator[](size_t index) const;								//Operator [] to acces values with const
+		const _Type&		operator[](size_t index) const;								//Operator [] to access values with const
 
 		Vector<2, _Type>	operator-(void) const;										//Operator - to negate the vector 2
 
@@ -91,15 +98,15 @@ namespace PenMath
 
 		Vector<2, _Type>&	operator++(void);											//Operator ++ for Vector2, Increment by one all elements in vector 		
 
-		Vector<2, _Type>&	operator--(void);											// Operator -- for Vector2, Decrease by one all elements in vector 
+		Vector<2, _Type>&	operator--(void);											//Operator -- for Vector2, Decrease by one all elements in vector 
 
 		Vector<2, _Type>	operator+(const Vector<2, _Type>&) const;					//Operator + for Vector2
 
-		Vector<2, _Type>&	operator+=(const Vector<2, _Type>&);						// Operator += for Vector2
+		Vector<2, _Type>&	operator+=(const Vector<2, _Type>&);						//Operator += for Vector2
 
 		Vector<2, _Type>	operator+(_Type) const;										//Operator + for a single value
 
-		Vector<2, _Type>&	operator+=(_Type);											// Operator += for a single value
+		Vector<2, _Type>&	operator+=(_Type);											//Operator += for a single value
 
 		Vector<2, _Type>	operator-(const Vector<2, _Type>&) const;					//Operator - for Vector2
 
@@ -127,15 +134,15 @@ namespace PenMath
 #pragma endregion
 		
 #pragma region FUNC
-		_Type	magnitude(void) const;													//Return the magnitude of the vector
+		_Type				magnitude(void) const;													//Return the magnitude of the vector
 
-		_Type	magnitudeSquared(void) const;											//Return the squared magnitude of the vector
+		_Type				magnitudeSquared(void) const;											//Return the squared magnitude of the vector
 
 		/// <summary>
 		/// Normalize this vector (divide by its magnitude)
 		/// </summary>
 		/// <param name=""></param>
-		void	normalize(void);
+		void				normalize(void);
 
 		/// <summary>
 		/// Return the dot product with the Vec2 in parameter
@@ -200,14 +207,27 @@ namespace PenMath
 		static Vector<2, _Type>		reflect(const Vector<2, _Type>&, const Vector<2, _Type>&);
 #pragma endregion
 
-//TO DO ANGLE 
+#pragma region ANGLE
+
+#if defined(VECTOR2_ANGLE)
+		static Radian		angle(const Vector<2, _Type>&, const Vector<2, _Type>&);										//Return the radian angle between two vectors 
+
+		static Radian		angle(const Vector<2, _Type>&, const Vector<2, _Type>&, const Vector<2, _Type>&);				//Return the radian angle between three vectors 
+#endif
+#pragma endregion
 		_Type x;
 		_Type y;
 	};
 
-	using Vector2 = typename Vector<2, int>;
-	using Vector2f = typename Vector<2, float>;
-	using Vector2d = typename Vector<2, double>;
+#if defined(VECTOR2_DEBUG)
+
+	template <typename _Type>
+	std::ostream& operator<<(std::ostream&, const Vector<2, _Type>&);			//Operator << to debug a vector in the console
+
+#endif
+	using Vector2 =		typename Vector<2, int>;
+	using Vector2f =	typename Vector<2, float>;
+	using Vector2d =	typename Vector<2, double>;
 }
 
 //TODO CONVERTION OPERATOR FOR BASIC TYPE

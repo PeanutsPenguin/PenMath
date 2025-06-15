@@ -1,3 +1,5 @@
+//#define VECTOR2_ANGLE
+//#define VECTOR2_DEBUG
 #include <Vector/Vector2.h>
 
 #include <catch2/catch_test_macros.hpp>
@@ -14,6 +16,8 @@
 #define CHECK_VECTOR2(vector, vectorGlm) CHECK(vector.x == Catch::Approx(vectorGlm.x)); CHECK(vector.y == Catch::Approx(vectorGlm.y));
 
 using namespace PenMath;
+
+#include <iostream>
 
 TEST_CASE("Vector2", "[.all][vector][Vector2]")
 {
@@ -219,6 +223,17 @@ TEST_CASE("Vector2", "[.all][vector][Vector2]")
 
 		glm::vec2 const baseGlm{ 2.5f, .5f };
 		glm::vec2 const otherGlm{ 3.75f, 3.f };
+
+#if defined(VECTOR2_ANGLE)
+		SECTION("Angle")
+		{
+			Radian angle = Vector2f::angle(base, other);
+
+			float angleGlm = glm::angle(glm::normalize(baseGlm), glm::normalize(otherGlm));
+
+			CHECK(angle.raw() == Catch::Approx(angleGlm));
+		}
+#endif
 
 		SECTION("Cross")
 		{

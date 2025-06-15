@@ -20,7 +20,7 @@ namespace PenMath
 #pragma region IN_CLASS_OPERATORS
 		Degree	operator-() const;
 
-		//operator Radian() const;			//Uncomment when Radian will be created 
+		operator Radian() const;			
 
 		Degree	operator+(const Degree&);	//Operator + with another Degree
 

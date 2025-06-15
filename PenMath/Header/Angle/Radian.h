@@ -12,7 +12,7 @@ namespace PenMath
 
 		explicit Radian(float value);		//Explicit so no implicit conversion from float to angle 
 
-		Radian(const Degree&);				//Cpy constructors 
+		Radian(const Radian&);				//Cpy constructors 
 
 		~Radian() = default;				//Default destructors 
 #pragma endregion
@@ -20,7 +20,7 @@ namespace PenMath
 #pragma region IN_CLASS_OPERATORS
 		Radian	operator-() const;
 
-		operator Degree() const;			//Convertion operator to Degree
+		operator Degree() const;			//Conversion operator to Degree
 
 		Radian	operator+(const Radian&);	//Operator + with another Radian
 
@@ -65,7 +65,7 @@ namespace PenMath
 		/// <summary>Return the wrapped value of the radian to wanted range.<para />
 		/// true -> limits value to range [-pi, pi[ <para />
 		/// false -> limits value to range [0, 2pi[</summary>
-		float wrappedValue(bool range = false) const;
+		float wrappedValue(bool range = true) const;
 
 		/// <summary>
 		/// Return the float value of the angle

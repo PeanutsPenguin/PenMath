@@ -1,5 +1,8 @@
-#include "Angle/Radian.h"
-#include "Angle/Degree.h"
+#include <Angle/Radian.h>
+
+#include <Angle/Degree.h>
+#include <Trigonometry.h>
+#include <Arithmetic.h>
 
 using namespace PenMath;
 
@@ -122,21 +125,24 @@ float Radian::wrappedValue(bool range) const
 {
 	float result = 0;
 
-	//TODO Define pi value in future arithmetic file
 	/* Checking if a m_value is already in the wanted range */
-	if ((range && m_value >= -1 * 3.141592653589793f && m_value < 3.141592653589793f)
-		|| (!range && m_value >= 0 && m_value < 2 * 3.141592653589793f))
+	if ((range && m_value >= (-1 * c_pi) && m_value < c_pi)
+		|| (!range && m_value >= 0 && m_value < 2 * c_pi))
 		return m_value;
-	/* Checking if m_value is strictly inferior to 2Pi so that
-	in the case where m_value = 2Pi, 0 will be returned */
-	/* Same for [-Pi, Pi] */
 
-	//Replace with floor in arithmetic
-	//result =  this->m_value -  (2 * 3.141592653589793f) * std::floor(angle / twoPi);
 
-	if (range && result >= 3.141592653589793f)
+	if (m_value >= 0)
 	{
-		result -= 2.0f * 3.141592653589793f;
+		result = fmod(m_value, c_2pi);
+	}
+	else
+	{
+		result = c_2pi + fmod(m_value, c_2pi);
+	}
+
+	if (range && result >= c_pi)
+	{
+		result -= c_2pi;
 	}
 
 	return result;
@@ -149,170 +155,169 @@ float Radian::raw() const
 
 float Radian::degree() const
 {
-	//TODO Define pi value in future arithmetic file
-	return this->m_value * 180 / 3.141592653589793f;
+	return this->m_value * 180 / c_pi;
 }
 
 #pragma endregion
 
 #pragma region OUT_CLASS_OPERATORS
 
-bool PenMath::operator==(Radian degA, Radian degB)
+bool PenMath::operator==(Radian radA, Radian radB)
 {
-	if (degA.wrappedValue() == degB.wrappedValue())
+	if (radA.wrappedValue() == radB.wrappedValue())
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator==(Radian deg, float value)
+bool PenMath::operator==(Radian rad, float value)
 {
-	if (deg.wrappedValue() == value)
+	if (rad.wrappedValue() == value)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator==(float value, Radian deg)
+bool PenMath::operator==(float value, Radian rad)
 {
-	if (deg.wrappedValue() == value)
+	if (rad.wrappedValue() == value)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator!=(Radian degA, Radian degB)
+bool PenMath::operator!=(Radian radA, Radian radB)
 {
-	if (degA.wrappedValue() != degB.wrappedValue())
+	if (radA.wrappedValue() != radB.wrappedValue())
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator!=(Radian deg, float value)
+bool PenMath::operator!=(Radian rad, float value)
 {
-	if (deg.wrappedValue() != value)
+	if (rad.wrappedValue() != value)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator!=(float value, Radian deg)
+bool PenMath::operator!=(float value, Radian rad)
 {
-	if (deg.wrappedValue() != value)
+	if (rad.wrappedValue() != value)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator>(Radian degA, Radian degB)
+bool PenMath::operator>(Radian radA, Radian radB)
 {
-	if (degA.wrappedValue() > degB.wrappedValue())
+	if (radA.wrappedValue() > radB.wrappedValue())
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator>(Radian deg, float value)
+bool PenMath::operator>(Radian rad, float value)
 {
-	if (deg.wrappedValue() > value)
+	if (rad.wrappedValue() > value)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator>(float value, Radian deg)
+bool PenMath::operator>(float value, Radian rad)
 {
-	if (deg.wrappedValue() > value)
+	if (rad.wrappedValue() > value)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator>=(Radian degA, Radian degB)
+bool PenMath::operator>=(Radian radA, Radian radB)
 {
-	if (degA.wrappedValue() >= degB.wrappedValue())
+	if (radA.wrappedValue() >= radB.wrappedValue())
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator>=(Radian deg, float value)
+bool PenMath::operator>=(Radian rad, float value)
 {
-	if (deg.wrappedValue() >= value)
+	if (rad.wrappedValue() >= value)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator>=(float value, Radian deg)
+bool PenMath::operator>=(float value, Radian rad)
 {
-	if (deg.wrappedValue() >= value)
+	if (rad.wrappedValue() >= value)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator<(Radian degA, Radian degB)
+bool PenMath::operator<(Radian radA, Radian radB)
 {
-	if (degA.wrappedValue() < degB.wrappedValue())
+	if (radA.wrappedValue() < radB.wrappedValue())
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator<(Radian deg, float value)
+bool PenMath::operator<(Radian rad, float value)
 {
-	if (deg.wrappedValue() < value)
+	if (rad.wrappedValue() < value)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator<(float value, Radian deg)
+bool PenMath::operator<(float value, Radian rad)
 {
-	if (deg.wrappedValue() < value)
+	if (rad.wrappedValue() < value)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator<=(Radian degA, Radian degB)
+bool PenMath::operator<=(Radian radA, Radian radB)
 {
-	if (degA.wrappedValue() <= degB.wrappedValue())
+	if (radA.wrappedValue() <= radB.wrappedValue())
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator<=(Radian deg, float value)
+bool PenMath::operator<=(Radian rad, float value)
 {
-	if (deg.wrappedValue() <= value)
+	if (rad.wrappedValue() <= value)
 	{
 		return true;
 	}
 	return false;
 }
 
-bool PenMath::operator<=(float value, Radian deg)
+bool PenMath::operator<=(float value, Radian rad)
 {
-	if (deg.wrappedValue() <= value)
+	if (rad.wrappedValue() <= value)
 	{
 		return true;
 	}

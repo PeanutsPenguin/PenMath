@@ -1,4 +1,6 @@
-#include "Angle/Degree.h"
+#include <Angle/Degree.h>
+#include <Angle/Radian.h>
+#include <Trigonometry.h>
 
 using namespace PenMath;
 
@@ -13,6 +15,11 @@ Degree::Degree(const Degree& cpy) : m_value(cpy.m_value) {}
 Degree Degree::operator-() const
 {
 	return Degree(-this->m_value);
+}
+
+Degree::operator Radian() const
+{
+	return Radian(this->radian());
 }
 
 Degree Degree::operator+(const Degree& deg)

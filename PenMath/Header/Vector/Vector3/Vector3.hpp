@@ -7,6 +7,7 @@
 
 #if defined (VECTOR3_CAST)
 	#include <Vector/Vector2/Vector2.h>
+	#include <Vector/Vector4/Vector4.h>
 #endif
 
 #if defined(VECTOR3_ANGLE)
@@ -82,21 +83,15 @@ namespace PenMath
 
 #if defined (VECTOR3_CAST)
 	TEMPLATE
-	inline VEC3::operator Vector<4, _Type>() const
+	VEC3::operator Vector<4, _Type>() const
 	{
 		return Vector<4, _Type>(this->x, this->y, this->z, static_cast<_Type>(1));
 	}
 
 	TEMPLATE
-	inline VEC3::operator Vector<2, _Type>() const
+	VEC3::operator Vector<2, _Type>() const
 	{
 		return Vector<2, _Type>(this->x, this->y);
-	}
-
-	TEMPLATE
-	inline VEC3::operator Vector<1, _Type>() const
-	{
-		return Vector<1, _Type>(this->x);
 	}
 #endif 
 
@@ -177,7 +172,7 @@ namespace PenMath
 	{
 		++this->x;
 		++this->y;
-		++this->z
+		++this->z;
 		return *this;
 	}
 
@@ -186,7 +181,7 @@ namespace PenMath
 	{
 		--this->x;
 		--this->y;
-		--this->z
+		--this->z;
 		return *this;
 	}
 
@@ -346,7 +341,7 @@ namespace PenMath
 	TEMPLATE
 	VEC3 VEC3::project(const VEC3& vec) const
 	{
-		return b * (VEC3::dot(*this, vec) / VEC3::dot(vec, vec));
+		return vec * (VEC3::dot(*this, vec) / VEC3::dot(vec, vec));
 	}
 
 	TEMPLATE
@@ -534,4 +529,16 @@ namespace PenMath
 	}
 #endif
 #pragma endregion
+
+#if defined(VECTOR3_DEBUG)
+	TEMPLATE
+		std::ostream& operator<<(std::ostream& os, const VEC4& vec)
+	{
+		os << "Vector4 : ";
+		os << "{" << vec.x;
+		os << ", " << vec.y;
+		os << ", " << vec.z << "}";
+		return os;
+	}
+#endif
 }

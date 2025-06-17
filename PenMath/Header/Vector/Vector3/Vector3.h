@@ -2,6 +2,10 @@
 
 #include <Vector/VectorBase.h>
 
+#if defined(VECTOR3_DEBUG)
+	#include <ostream>
+#endif
+
 namespace PenMath
 {
 	class Radian;
@@ -16,7 +20,7 @@ namespace PenMath
 		/// <summary>
 		/// Unique parameter constructor
 		/// </summary>
-		/// <param name="">x AND y AND z value</param>
+		/// <param name="">x,y AND z value</param>
 		Vector(_Type);
 
 		/// <summary>
@@ -74,17 +78,13 @@ namespace PenMath
 
 #pragma endregion
 
-
-#pragma region OPERATOR_VEC3
+		#pragma region OPERATOR_VEC3
 
 #if defined(VECTOR3_CAST)
 
 		operator Vector<4, _Type>() const;		//Convertion operator into a vector4
 
 		operator Vector<2, _Type>() const;		//Convertion operator into a vector2
-
-		operator Vector<1, _Type>() const;		//Convertion operator into a vector1
-
 #endif
 
 		Vector<3, _Type>&	operator=(const Vector<3, _Type>&) = default;					//Default operator = to assign values of another vector
@@ -95,7 +95,7 @@ namespace PenMath
 
 		const _Type&		operator[](size_t index) const;									//Operator [] to access values with const
 
-		Vector<3, _Type>	operator-(void) const;											//Operator - to negate the vector 2
+		Vector<3, _Type>	operator-(void) const;											//Operator - to negate the vector 3
 
 		bool				operator==(const Vector<3, _Type>&) const;						//Operator == to see if the vector is equal to another
 
@@ -129,7 +129,7 @@ namespace PenMath
 
 		Vector<3, _Type>&	operator-=(_Type);												//Operator -= for a single value
 
-		Vector<3, _Type>	operator*(const Vector<3, _Type>&) const;						//Operator * to multiply by vector 2 to the current one
+		Vector<3, _Type>	operator*(const Vector<3, _Type>&) const;						//Operator * to multiply by vector 3 to the current one
 
 		Vector<3, _Type>&	operator*=(const Vector<3, _Type>&);							//Operator *= for Vector3
 
@@ -137,9 +137,9 @@ namespace PenMath
 
 		Vector<3, _Type>&	operator*=(_Type);												//Operator *= to multiply by a constant
 
-		Vector<3, _Type>	operator/(const Vector<3, _Type>&) const;						//Operator / to divide by a vector 2 to the current one
+		Vector<3, _Type>	operator/(const Vector<3, _Type>&) const;						//Operator / to divide by a vector 3 to the current one
 
-		Vector<3, _Type>&	operator/=(const Vector<3, _Type>&);							//Operator /= to divide by a vector 2 to the current one
+		Vector<3, _Type>&	operator/=(const Vector<3, _Type>&);							//Operator /= to divide by a vector 3 to the current one
 
 		Vector<3, _Type>	operator/(_Type) const;											//Operator / to divide by a constant
 
@@ -223,18 +223,18 @@ namespace PenMath
 		static Vector<3, _Type>		reflect(const Vector<3, _Type>&, const Vector<3, _Type>&);	
 
 		/// <summary>
-		/// Return the dot product between two Vec2
+		/// Return the dot product between two Vec3
 		/// </summary>
 		static _Type				dot(const Vector<3, _Type>&, const Vector<3, _Type>&);
 
 		/// <summary>
-		/// Return the cross product between two Vec2
+		/// Return the cross product between two Vec3
 		/// </summary>
 		static Vector<3, _Type>		cross(const Vector<3, _Type>&, const Vector<3, _Type>&);
 
 		#pragma endregion
 
-#pragma region ANGLE
+		#pragma region ANGLE
 
 #if defined(VECTOR3_ANGLE)
 		/// <summary>
@@ -268,6 +268,13 @@ namespace PenMath
 		_Type y;
 		_Type z;
 	};
+
+#if defined(VECTOR3_DEBUG)
+
+	template <typename _Type>
+	std::ostream& operator<<(std::ostream&, const Vector<3, _Type>&);			//Operator << to debug a vector in the console
+
+#endif
 
 	using Vector3 = typename Vector<3, int>;
 	using Vector3f = typename Vector<3, float>;

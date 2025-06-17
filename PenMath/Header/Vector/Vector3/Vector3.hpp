@@ -1,6 +1,8 @@
 #pragma once
 #include <Vector/Vector3/Vector3.h>
+
 #include <Arithmetic.h>
+#include <cmath>
 
 #define TEMPLATE template<typename _Type>
 #define VEC3 Vector<3, _Type>
@@ -241,7 +243,7 @@ namespace PenMath
 	{
 		this->x -= toSubtract;
 		this->y -= toSubtract;
-		this->z -= toSubtract
+		this->z -= toSubtract;
 		return *this;
 	}
 

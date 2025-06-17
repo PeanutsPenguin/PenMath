@@ -2,6 +2,7 @@
 #include <Vector/Vector4/Vector4.h>
 
 #include <Arithmetic.h>
+#include <cmath>
 
 #define TEMPLATE template<typename _Type>
 #define VEC4 Vector<4, _Type>
@@ -213,7 +214,7 @@ namespace PenMath
 	TEMPLATE
 	VEC4 VEC4::operator-(_Type toSubtract) const
 	{
-		return VEC4(this->x - toSubtract, this->y - toSubtract, this->z - toSubtract.z, this->w -  toSubtract);
+		return VEC4(this->x - toSubtract, this->y - toSubtract, this->z - toSubtract, this->w -  toSubtract);
 	}
 
 	TEMPLATE

@@ -7,6 +7,10 @@
 	#include <stdexcept>
 #endif // INIALIZER_LIST
 
+#if defined(MAT2_DEBUG)
+	#include <ostream>
+#endif // INIALIZER_LIST
+
 
 
 namespace PenMath
@@ -16,6 +20,7 @@ namespace PenMath
 	/// </summary>
 	class Mat2 
 	{
+	public:
 #pragma region CONSTRUCTORS
 		Mat2(void) = default;					//Default Mat2 constructor 
 
@@ -44,28 +49,85 @@ namespace PenMath
 
 #pragma endregion
 		
-
 #pragma region FUNCTION
-		Mat2& toIdentity();
+		/// <summary>
+		/// Replace the trace of the matrix by one
+		/// </summary>
+		Mat2& toIdentity(void);	
 
-		Mat2& clear();
+		/// <summary>
+		/// Replace all values in the matrix by 0
+		/// </summary>
+		Mat2& clear(void);
 
-		Mat2 getTranspose();
+		/// <summary>
+		/// Return the transpose of the matrix
+		/// </summary>
+		/// <returns>The transpose of the matrix/returns>
+		Mat2 getTranspose(void);
 
-		Mat2& toTranspose();
+		/// <summary>
+		/// Change the matrix to its transpose
+		/// </summary>
+		Mat2& toTranspose(void);
 
-		float getDeterminant();
+		/// <summary>
+		/// Return the determinant of the matrix
+		/// </summary>
+		/// <returns>Determinant of the matrix</returns>
+		float getDeterminant(void);		
 #pragma endregion
-
 
 #pragma region STATIC_FUNC
+
+		/// <summary>
+		/// Returns a Matrix filled by 0
+		/// </summary>
+		static Mat2 zero(void);
+
+		/// <summary>
+		/// Returns a Matrix filled by 0
+		/// </summary>
+		static Mat2 identity(void);
 #pragma endregion
 
+#pragma region OPERATORS
+		Vector2& operator[](size_t index) noexcept { return this->m_matrix[index]; }					//Operator to access matrix
 
+		const Vector2& operator[](size_t index) const noexcept { return this->m_matrix[index]; }		//Operator const to access matrix
+
+		bool operator==(const Mat2& toCompare) const;		//Operator to compare Mat2
+
+		bool operator!=(const Mat2& toCompare) const;		//Operator to compare Mat2
+
+		Mat2& operator=(const Mat2& equal) = default;		//Operator to give matrix values
+
+		Mat2& operator=(Mat2&& equal) = default;			//Operator to move matrix values
+
+		Mat2 operator*(const Mat2& toMultiply) const;		//Operator const to multiply matrix with another
+
+		Mat2& operator*=(const Mat2& toMultiply);			//Operator to multiply matrix with another and take values
+
+		Mat2 operator*(const float value) const;			//Operator const to multiply matrix with a float
+
+		Mat2& operator*=(const float value);				//Operator to multiply matrix with a float and take values
+
+		Mat2 operator+(const Mat2& rhs) const;				//Operator const to add matrix with another
+
+		Mat2& operator+=(const Mat2& rhs);					//Operator to add matrix with another and take values
+
+		Mat2 operator-(const Mat2& rhs) const;				//Operator const to substract matrix with another
+
+		Mat2& operator-=(const Mat2& rhs);					//Operator to substract matrix with another and take values
+#pragma endregion
 
 
 	private:
 		Vector2 m_matrix[2];
 		bool m_rowMajor = false;
 	};
+
+#if defined(MAT2_DEBUG)
+	std::ostream& operator<<(std::ostream& os, const Mat2& matrix);		//Operator << to print a matrix in the console
+#endif
 }

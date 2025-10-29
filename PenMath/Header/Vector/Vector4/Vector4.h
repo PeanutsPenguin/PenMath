@@ -51,7 +51,7 @@ namespace PenMath
 
 		Vector<4, _Type>&	operator=(Vector<4, _Type>&&) = default;						//Default operator = to move another vector into this on	
 
-		_Type&				operator[](size_t index);												//Operator [] to access values 
+		_Type&				operator[](size_t index);										//Operator [] to access values 
 
 		const _Type&		operator[](size_t index) const;									//Operator [] to access values with const
 

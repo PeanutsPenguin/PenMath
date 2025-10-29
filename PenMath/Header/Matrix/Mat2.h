@@ -75,7 +75,7 @@ namespace PenMath
 		/// Return the determinant of the matrix
 		/// </summary>
 		/// <returns>Determinant of the matrix</returns>
-		float getDeterminant(void);		
+		float getDeterminant(void) const;		
 #pragma endregion
 
 #pragma region STATIC_FUNC

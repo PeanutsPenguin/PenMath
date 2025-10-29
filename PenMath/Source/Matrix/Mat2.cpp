@@ -87,7 +87,7 @@ namespace PenMath
 		return *this;
 	}
 
-	float Mat2::getDeterminant(void)
+	float Mat2::getDeterminant(void) const
 	{
 		return ((*this)[0][0] * (*this)[1][1]) - ((*this)[0][1] * (*this)[1][0]);
 	}

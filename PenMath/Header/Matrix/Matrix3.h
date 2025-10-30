@@ -174,5 +174,8 @@ namespace PenMath
 		Vector3f m_matrix[3];
 	};
 
+#if defined(MAT3_DEBUG)
+	std::ostream& operator<<(std::ostream& os, const Mat3& matrix);		//Operator << to print a matrix in the console
+#endif
 
 }

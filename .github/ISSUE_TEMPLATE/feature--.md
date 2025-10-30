@@ -2,7 +2,7 @@
 name: 'Feature :'
 about: Template for feature request
 title: ''
-labels: Feature
+labels: Bug, Feature
 assignees: PeanutsPenguin
 
 ---

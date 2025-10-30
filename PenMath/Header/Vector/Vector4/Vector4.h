@@ -11,7 +11,7 @@ namespace PenMath
 	template<typename _Type>
 	struct Vector<4, _Type>
 	{
-		#pragma region CONSTRUCTORS
+#pragma region CONSTRUCTORS
 
 		Vector(void);									//Empty constructor							
 
@@ -39,7 +39,7 @@ namespace PenMath
 
 		#pragma endregion
 
-		#pragma region OPERATOR
+#pragma region OPERATOR
 #if defined(VECTOR4_CAST)
 
 		operator Vector<3, _Type>() const;		//Convertion operator into a vector3
@@ -107,7 +107,7 @@ namespace PenMath
 
 		#pragma endregion
 		
-		#pragma region FUNC
+#pragma region FUNC
 
 		_Type	magnitude(void) const;
 
@@ -135,7 +135,7 @@ namespace PenMath
 
 		#pragma endregion
 
-		#pragma region STATIC_FUNC
+#pragma region STATIC_FUNC
 
 		/// <summary>
 		/// Return the distance between the two Vector4

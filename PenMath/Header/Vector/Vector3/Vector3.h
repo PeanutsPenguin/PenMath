@@ -13,7 +13,7 @@ namespace PenMath
 	template<typename _Type>
 	struct Vector<3, _Type>
 	{
-		#pragma region CONSTRUCTORS
+#pragma region CONSTRUCTORS
 
 		Vector(void);									//Empty constructor							
 
@@ -35,7 +35,7 @@ namespace PenMath
 
 		#pragma endregion
 
-		#pragma region BASIC_VEC3
+#pragma region BASIC_VEC3
 		/// <summary>
 		/// Return a Vector3 (0, 0, 0)
 		/// </summary>
@@ -78,7 +78,7 @@ namespace PenMath
 
 #pragma endregion
 
-		#pragma region OPERATOR_VEC3
+#pragma region OPERATOR_VEC3
 
 #if defined(VECTOR3_CAST)
 
@@ -146,7 +146,7 @@ namespace PenMath
 		Vector<3, _Type>&	operator/=(_Type);												//Operator /= to divide by a constantR
 #pragma endregion
 
-		#pragma region FUNC
+#pragma region FUNC
 
 		_Type	magnitude(void) const;
 
@@ -179,7 +179,7 @@ namespace PenMath
 
 		#pragma endregion
 
-		#pragma region STATIC_FUNC
+#pragma region STATIC_FUNC
 
 		/// <summary>
 		/// Return the distance between the two Vector3
@@ -234,7 +234,7 @@ namespace PenMath
 
 		#pragma endregion
 
-		#pragma region ANGLE
+#pragma region ANGLE
 
 #if defined(VECTOR3_ANGLE)
 		/// <summary>

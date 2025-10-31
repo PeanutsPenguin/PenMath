@@ -30,6 +30,11 @@ namespace PenMath
 		return (int)value;
 	}
 
+	float fmod(float numerator, float denominator)
+	{
+		return numerator - ((int)(numerator / denominator)) * denominator;
+	}
+
 	float power(float value, int exponent)
 	{
 		if (exponent == 0)
@@ -46,23 +51,52 @@ namespace PenMath
 		return result;
 	}
 
-	float fmod(float numerator, float denominator)
+	//Check this video if you want to rly understand this non-sense : https://youtu.be/p8u_k2LIZyo
+	void separatefloat(float value, float& mantissa, int& exponent)
 	{
-		return numerator - ((int)(numerator / denominator)) * denominator;
+		int binValue = *(int*)&value;
+
+		exponent = ((binValue >> 23) & 0xFF) - 127;
+
+		int mantissaBits = binValue & 0x7FFFFF;
+
+		float fraction = 1.0f + (float)mantissaBits / (1 << 23);
+
+		if (binValue & 0x80000000)
+			fraction = -fraction;
+
+		mantissa = fraction;
 	}
 
-	void swap(int& valueA, int& valueB)
+	float assembleFloat(float mantissa, int exponent)
 	{
-		int cpy = valueA;
-		valueA = valueB;
-		valueB = cpy;
+		return mantissa * power(2.f, exponent);
 	}
 
-	void swap(float& valueA, float& valueB)
+	float squareRoot(float value)
 	{
-		float cpy = valueA;
-		valueA = valueB;
-		valueB = cpy;
+		if (value <= 0)
+			return 0;       // if negative number throw an exception?
+
+		int exp = 0;
+		float mantissa;
+
+		separatefloat(value, mantissa, exp); // extract binary exponent from x
+
+		if (exp & 1) {      // we want exponent to be even
+			exp--;
+			mantissa *= 2;
+		}
+
+		float y = (1 + mantissa) / 2; // first approximation
+		float z = 0;
+
+		while (y != z) {    // yes, we CAN compare doubles here!
+			z = y;
+			y = (y + mantissa / y) / 2;
+		}
+
+		return assembleFloat(y, exp / 2); // multiply answer by 2^(exp/2)}
 	}
 }
 

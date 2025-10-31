@@ -297,7 +297,7 @@ namespace PenMath
 	TEMPLATE
 	_Type VEC4::magnitude(void) const
 	{
-		return std::sqrtf(power(static_cast<float>(this->x), 2.f) + power(static_cast<float>(this->y), 2.f) + power(static_cast<float>(this->z), 2.f) + power(static_cast<float>(this->w), 2.f));
+		return squareRoot(power(static_cast<float>(this->x), 2.f) + power(static_cast<float>(this->y), 2.f) + power(static_cast<float>(this->z), 2.f) + power(static_cast<float>(this->w), 2.f));
 	}
 
 	TEMPLATE

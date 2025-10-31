@@ -17,7 +17,7 @@ namespace PenMath
 		}
 	}
 
-	Mat2::Mat2(const Vector2& a, const Vector2& b) 
+	Mat2::Mat2(const Vector2f& a, const Vector2f& b) 
 	{
 		this->m_matrix[0] = a;
 		this->m_matrix[1] = b;

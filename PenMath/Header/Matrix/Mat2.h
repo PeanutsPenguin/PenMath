@@ -41,7 +41,7 @@ namespace PenMath
 		/// </summary>
 		/// <param name="a">First Row or Column depanding on the choice</param>
 		/// <param name="b">Second Row or Column depanding on the choice</param>
-		Mat2(const Vector2& a, const Vector2& b);
+		Mat2(const Vector2f& a, const Vector2f& b);
 
 #if defined(INIALIZER_LIST)
 		Mat2(std::initializer_list<float> initList);
@@ -123,7 +123,7 @@ namespace PenMath
 
 
 	private:
-		Vector2 m_matrix[2];
+		Vector2f m_matrix[2];
 		bool m_rowMajor = false;
 	};
 

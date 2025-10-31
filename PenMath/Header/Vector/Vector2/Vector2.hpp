@@ -263,13 +263,13 @@ namespace PenMath
 	TEMPLATE
 	_Type VEC2::magnitude(void) const 
 	{
-		return std::sqrtf(std::powf(static_cast<float>(this->x), 2.f) + std::powf(static_cast<float>(this->y), 2.f));
+		return squareRoot(power(static_cast<float>(this->x), 2.f) + power(static_cast<float>(this->y), 2.f));
 	}
 
 	TEMPLATE
 	_Type VEC2::magnitudeSquared(void) const
 	{
-		return std::powf(static_cast<float>(this->x), 2.f) + std::powf(static_cast<float>(this->y), 2.f);
+		return power(static_cast<float>(this->x), 2.f) + power(static_cast<float>(this->y), 2.f);
 	}
 
 	TEMPLATE

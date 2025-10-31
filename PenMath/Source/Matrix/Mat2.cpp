@@ -17,7 +17,7 @@ namespace PenMath
 		}
 	}
 
-	Mat2::Mat2(const Vector2& a, const Vector2& b) 
+	Mat2::Mat2(const Vector2f& a, const Vector2f& b) 
 	{
 		this->m_matrix[0] = a;
 		this->m_matrix[1] = b;
@@ -206,21 +206,5 @@ namespace PenMath
 
 #pragma endregion
 
-#if defined (MAT2_DEBUG)
-	std::ostream& operator<<(std::ostream& os, const Mat2& matrix)
-	{
-		os << "Matrix 2x2 :" << '\n';
-
-		for (size_t index = 0; index < 2; ++index)
-		{
-			for (size_t jindex = 0; jindex < 2; ++jindex)
-				os << matrix[index][jindex] << '\t';
-
-			os << '\n';
-		}
-
-		return os;
-	}
-#endif
 }
 

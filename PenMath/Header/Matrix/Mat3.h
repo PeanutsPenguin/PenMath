@@ -175,7 +175,20 @@ namespace PenMath
 	};
 
 #if defined(MAT3_DEBUG)
-	std::ostream& operator<<(std::ostream& os, const Mat3& matrix);		//Operator << to print a matrix in the console
+	std::ostream& operator<<(std::ostream& os, const Mat3& matrix)		//Operator << to print a matrix in the console
+	{
+		os << "Matrix 3x3 :" << '\n';
+
+		for (size_t index = 0; index < 3; ++index)
+		{
+			for (size_t jindex = 0; jindex < 3; ++jindex)
+				os << matrix[index][jindex] << '\t';
+
+			os << '\n';
+		}
+
+		return os;
+	}
 #endif
 
 }

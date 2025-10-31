@@ -9,7 +9,7 @@
 
 #if defined(MAT2_DEBUG)
 	#include <ostream>
-#endif // INIALIZER_LIST
+#endif // Print
 
 
 
@@ -92,9 +92,9 @@ namespace PenMath
 #pragma endregion
 
 #pragma region OPERATORS
-		Vector2& operator[](size_t index) noexcept { return this->m_matrix[index]; }					//Operator to access matrix
+		Vector2f& operator[](size_t index) noexcept { return this->m_matrix[index]; }					//Operator to access matrix
 
-		const Vector2& operator[](size_t index) const noexcept { return this->m_matrix[index]; }		//Operator const to access matrix
+		const Vector2f& operator[](size_t index) const noexcept { return this->m_matrix[index]; }		//Operator const to access matrix
 
 		bool operator==(const Mat2& toCompare) const;		//Operator to compare Mat2
 
@@ -129,5 +129,18 @@ namespace PenMath
 
 #if defined(MAT2_DEBUG)
 	std::ostream& operator<<(std::ostream& os, const Mat2& matrix);		//Operator << to print a matrix in the console
+	{
+		os << "Matrix 2x2 :" << '\n';
+
+		for (size_t index = 0; index < 2; ++index)
+		{
+			for (size_t jindex = 0; jindex < 2; ++jindex)
+				os << matrix[index][jindex] << '\t';
+
+			os << '\n';
+		}
+
+		return os;
+	}
 #endif
 }

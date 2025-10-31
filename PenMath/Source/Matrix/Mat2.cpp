@@ -206,21 +206,5 @@ namespace PenMath
 
 #pragma endregion
 
-#if defined (MAT2_DEBUG)
-	std::ostream& operator<<(std::ostream& os, const Mat2& matrix)
-	{
-		os << "Matrix 2x2 :" << '\n';
-
-		for (size_t index = 0; index < 2; ++index)
-		{
-			for (size_t jindex = 0; jindex < 2; ++jindex)
-				os << matrix[index][jindex] << '\t';
-
-			os << '\n';
-		}
-
-		return os;
-	}
-#endif
 }
 

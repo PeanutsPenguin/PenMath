@@ -12,7 +12,7 @@
 
 namespace PenMath
 {
-	#pragma region CONSTRUCTORS
+#pragma region CONSTRUCTORS
 	TEMPLATE
 	VEC2::Vector(void) : VEC2(_Type(0)) {}
 
@@ -23,7 +23,7 @@ namespace PenMath
 	VEC2::Vector(_Type valA, _Type valB) : x(valA), y(valB) {}
 	#pragma endregion
 
-	#pragma region BASIC_VEC2
+#pragma region BASIC_VEC2
 	TEMPLATE
 	Vector<2, int> VEC2::Zero(void)
 	{
@@ -61,7 +61,22 @@ namespace PenMath
 	}
 	#pragma endregion
 
-	#pragma region OPERATOR_VEC2
+#pragma region OPERATOR_VEC2
+#if defined (VECTOR2_CAST)
+	TEMPLATE
+	VEC2::operator Vector<4, _Type>() const
+	{
+		return Vector<4, _Type>(this->x, this->y, static_cast<_Type>(1), static_cast<_Type>(1));
+	}
+
+	TEMPLATE
+	VEC2::operator Vector<3, _Type>() const
+	{
+		return Vector<3, _Type>(this->x, this->y, static_cast<_Type>(1));
+	}
+#endif 
+
+
 	TEMPLATE
 	_Type& VEC2::operator[](size_t index)
 	{

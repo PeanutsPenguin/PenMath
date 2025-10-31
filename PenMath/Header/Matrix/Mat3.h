@@ -1,5 +1,6 @@
 #pragma once 
 
+#define VECTOR3_CAST
 #include <Vector/Vector3/Vector3.h>
 
 #if defined(MAT3_INITIALIZER)
@@ -36,7 +37,21 @@ namespace PenMath
 		Mat3(const Vector3f&, const Vector3f&, const Vector3f&);		//Matrix3 constructor with 3 vector in parameters to initialize the entire matrix
 
 #if defined(MAT3_INITIALIZER)
-		Mat3(std::initializer_list<float>);								//Initialize values with an array of float 
+		Mat3(std::initializer_list<float>)							//Initialize values with an array of float 
+		{
+			int valuesIndex = 0;
+			for (size_t index = 0; index < 3; ++index)
+				for (size_t jindex = 0; jindex < 3; ++jindex)
+				{
+					if (values.size() > valuesIndex)
+					{
+						this->m_matrix[index][jindex] = *(values.begin() + valuesIndex);
+						valuesIndex++;
+					}
+					else
+						this->m_matrix[index][jindex] = 0;
+				}
+		}
 #endif
 		#pragma endregion
 

@@ -1,4 +1,6 @@
 #include "Matrix/Mat3.h"
+
+#define VECTOR2_CAST
 #include "Matrix/Mat2.h"
 
 using namespace PenMath;
@@ -21,25 +23,6 @@ Mat3::Mat3(const Vector3f& vecA, const Vector3f& vecB, const Vector3f& vecC)
 	this->m_matrix[1] = vecB;
 	this->m_matrix[2] = vecC;
 }
-
-#if defined (MAT3_INITIALIZER)
-	Mat3::Mat3(std::initializer_list<float> values)
-	{
-		int valuesIndex = 0;
-		for (size_t index = 0; index < 3; ++index)
-			for (size_t jindex = 0; jindex < 3; ++jindex)
-			{
-				if (values.size() > valuesIndex) 
-				{
-					this->m_matrix[index][jindex] = *values.begin() + valuesIndex;
-					valuesIndex++;
-				}
-				else 
-					this->m_matrix[index][jindex] = 0;
-			}
-	}
-#endif
-
 
 #pragma endregion
 

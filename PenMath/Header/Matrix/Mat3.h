@@ -36,7 +36,7 @@ namespace PenMath
 		Mat3(const Vector3f&, const Vector3f&, const Vector3f&);		//Matrix3 constructor with 3 vector in parameters to initialize the entire matrix
 
 #if defined(MAT3_INITIALIZER)
-		Mat3(std::initializer_list<float>)							//Initialize values with an array of float 
+		Mat3(std::initializer_list<float> values)							//Initialize values with an array of float 
 		{
 			int valuesIndex = 0;
 			for (size_t index = 0; index < 3; ++index)

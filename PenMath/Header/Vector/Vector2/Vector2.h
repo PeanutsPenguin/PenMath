@@ -74,12 +74,10 @@ namespace PenMath
 #pragma endregion
 
 #pragma region OPERATOR_VEC2
-#if defined(VECTOR2_CAST)
 
 		operator Vector<4, _Type>() const;		//Convertion operator into a vector4
 
-		operator Vector<2, _Type>() const;		//Convertion operator into a vector2
-#endif
+		operator Vector<3, _Type>() const;		//Convertion operator into a vector2
 
 		Vector<2, _Type>&	operator=(const Vector<2, _Type>&)		= default;			//Default operator = to assign values of another vector
 

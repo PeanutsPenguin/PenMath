@@ -14,7 +14,6 @@
 namespace PenMath
 {
 	class Mat2;
-	struct Vector2f;
 
 	/// <summary>
 	/// Matrix is composed by 3 Vector3f (file Vector/Vector3.h is included)

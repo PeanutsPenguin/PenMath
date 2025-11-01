@@ -62,7 +62,7 @@ namespace PenMath
 	#pragma endregion
 
 #pragma region OPERATOR_VEC2
-#if defined (VECTOR2_CAST)
+
 	TEMPLATE
 	VEC2::operator Vector<4, _Type>() const
 	{
@@ -74,7 +74,6 @@ namespace PenMath
 	{
 		return Vector<3, _Type>(this->x, this->y, static_cast<_Type>(1));
 	}
-#endif 
 
 
 	TEMPLATE

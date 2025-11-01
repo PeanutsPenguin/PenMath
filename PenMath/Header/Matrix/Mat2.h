@@ -128,7 +128,7 @@ namespace PenMath
 	};
 
 #if defined(MAT2_DEBUG)
-	std::ostream& operator<<(std::ostream& os, const Mat2& matrix);		//Operator << to print a matrix in the console
+	std::ostream& operator<<(std::ostream& os, const Mat2& matrix)		//Operator << to print a matrix in the console
 	{
 		os << "Matrix 2x2 :" << '\n';
 

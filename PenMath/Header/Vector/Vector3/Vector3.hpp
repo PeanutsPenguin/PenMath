@@ -82,8 +82,6 @@ namespace PenMath
 #pragma endregion
 
 #pragma region OPERATOR_VEC3
-
-#if defined (VECTOR3_CAST)
 	TEMPLATE
 	VEC3::operator Vector<4, _Type>() const
 	{
@@ -95,7 +93,6 @@ namespace PenMath
 	{
 		return Vector<2, _Type>(this->x, this->y);
 	}
-#endif 
 
 	TEMPLATE
 	_Type& VEC3::operator[](size_t index)

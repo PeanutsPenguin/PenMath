@@ -26,11 +26,9 @@ namespace PenMath
 		/// </summary>
 		Vector(_Type, _Type, _Type, _Type);
 
-#if defined(VECTOR4_CAST)
 		Vector(const Vector<2, _Type>&, const Vector<2, _Type>&);		//Constructors with two Vector2
 
 		Vector(const Vector<3, _Type>& xyz, _Type);						//Constructor with 1 vec3 and w value 
-#endif
 
 		Vector(const Vector<4, _Type>&) = default;		//Default copy constructors 
 		Vector(Vector<4, _Type>&&) = default;			//Default move constructors
@@ -40,12 +38,10 @@ namespace PenMath
 		#pragma endregion
 
 #pragma region OPERATOR
-#if defined(VECTOR4_CAST)
 
 		operator Vector<3, _Type>() const;		//Convertion operator into a vector3
 
 		operator Vector<2, _Type>() const;		//Convertion operator into a vector2
-#endif
 
 		Vector<4, _Type>&	operator=(const Vector<4, _Type>&) = default;					//Default operator = to assign values of another vector
 

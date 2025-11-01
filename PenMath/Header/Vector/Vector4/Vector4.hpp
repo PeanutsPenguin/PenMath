@@ -29,7 +29,6 @@ namespace PenMath
 	TEMPLATE
 	VEC4::Vector(_Type valA, _Type valB, _Type valC, _Type valD) : x(valA), y(valB), z(valC), w(valD) {}
 
-#if defined (VECTOR4_CAST)
 	TEMPLATE 
 	VEC4::Vector(const Vector<2, _Type>& vecA, const Vector<2, _Type>& vecB)
 	{
@@ -47,13 +46,10 @@ namespace PenMath
 		this->z = vec.z;
 		this->w = value;
 	}
-#endif
 
 #pragma endregion
 
 #pragma region OPERATOR_VEC4
-
-#if defined (VECTOR4_CAST)
 	TEMPLATE
 	VEC4::operator Vector<3, _Type>() const
 	{
@@ -65,7 +61,6 @@ namespace PenMath
 	{
 		return Vector<2, _Type>(this->x, this->y);
 	}
-#endif 
 
 	TEMPLATE
 	_Type& VEC4::operator[](size_t index)

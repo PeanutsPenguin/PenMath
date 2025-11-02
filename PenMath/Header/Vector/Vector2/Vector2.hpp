@@ -2,10 +2,17 @@
 #include <Vector/Vector2/Vector2.h>
 #include <Arithmetic.h>
 
+#if defined (VECTOR2_CAST)
+	#include <Vector/Vector3/Vector3.h>
+	#include <Vector/Vector4/Vector4.h>
+#endif
+
 #if defined(VECTOR2_ANGLE)
 	#include <Angle/Radian.h>
 	#include <cmath>
 #endif
+
+
 
 #define TEMPLATE template<typename _Type>
 #define VEC2 Vector<2, _Type>
@@ -63,6 +70,7 @@ namespace PenMath
 
 #pragma region OPERATOR_VEC2
 
+#if defined (VECTOR2_CAST)
 	TEMPLATE
 	VEC2::operator Vector<4, _Type>() const
 	{
@@ -74,7 +82,7 @@ namespace PenMath
 	{
 		return Vector<3, _Type>(this->x, this->y, static_cast<_Type>(1));
 	}
-
+#endif
 
 	TEMPLATE
 	_Type& VEC2::operator[](size_t index)

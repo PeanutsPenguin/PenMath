@@ -2,7 +2,6 @@
 #include <Vector/Vector4/Vector4.h>
 
 #include <Arithmetic.h>
-#include <cmath>
 
 #define TEMPLATE template<typename _Type>
 #define VEC4 Vector<4, _Type>
@@ -13,6 +12,7 @@
 #endif
 
 #if defined(VECTOR4_ANGLE)
+	#include <cmath>
 	#include <Angle/Radian.h>
 #endif
 
@@ -50,6 +50,8 @@ namespace PenMath
 #pragma endregion
 
 #pragma region OPERATOR_VEC4
+
+#if defined (VECTOR4_CAST)
 	TEMPLATE
 	VEC4::operator Vector<3, _Type>() const
 	{
@@ -61,6 +63,7 @@ namespace PenMath
 	{
 		return Vector<2, _Type>(this->x, this->y);
 	}
+#endif
 
 	TEMPLATE
 	_Type& VEC4::operator[](size_t index)

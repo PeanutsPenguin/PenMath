@@ -35,13 +35,15 @@ namespace PenMath
 
 		~Vector(void) = default;						//Default destructor (yes it's in the constructors category)
 
-		#pragma endregion
+#pragma endregion
 
 #pragma region OPERATOR
 
+#if defined(VECTOR4_CAST)
 		operator Vector<3, _Type>() const;		//Convertion operator into a vector3
 
 		operator Vector<2, _Type>() const;		//Convertion operator into a vector2
+#endif
 
 		Vector<4, _Type>&	operator=(const Vector<4, _Type>&) = default;					//Default operator = to assign values of another vector
 
@@ -101,7 +103,7 @@ namespace PenMath
 
 		Vector<4, _Type>&	operator/=(_Type);												//Operator /= to divide by a constant 
 
-		#pragma endregion
+#pragma endregion
 		
 #pragma region FUNC
 
@@ -143,7 +145,6 @@ namespace PenMath
 		/// </summary>
 		static _Type				distanceSquared(const Vector<4, _Type>&, const Vector<4, _Type>&);
 
-#if defined(VECTOR4_CAST)
 		/// <summary>
 		/// Return the 2D distance between two vectors
 		/// </summary>
@@ -153,7 +154,7 @@ namespace PenMath
 		/// Return the 2D distance between two vectors
 		/// </summary>
 		static _Type				distance2Squared(const Vector<4, _Type>&, const Vector<4, _Type>&);
-#endif
+
 		/// <summary>
 		/// Returns true if the vector is unit
 		/// </summary>

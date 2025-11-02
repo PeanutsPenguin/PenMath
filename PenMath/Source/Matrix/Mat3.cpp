@@ -1,7 +1,9 @@
 #include "Matrix/Mat3.h"
 
-#define VECTOR2_CAST
 #include "Matrix/Mat2.h"
+
+//TODO : REMOVE WHEN I'LL HAVE MY OWN COS, SIN AND TAN
+#include <cmath>
 
 using namespace PenMath;
 
@@ -333,7 +335,7 @@ Mat3 PenMath::Mat3::getInverse(void) const
 #pragma endregion
 
 #pragma region STATIC_FUNC
-Mat3 PenMath::Mat3::translate(const Vector2f& translator)
+Mat3 Mat3::translate(const Vector2f& translator)
 {
 	Mat3 matrix = Mat3::identity();
 	matrix[0][2] = translator[0];
@@ -342,7 +344,7 @@ Mat3 PenMath::Mat3::translate(const Vector2f& translator)
 	return matrix;
 }
 
-Mat3 PenMath::Mat3::rotate(const Vector2f& rotator)
+Mat3 Mat3::rotate(const Vector2f& rotator)
 {
 	Mat3 rotate = Mat3::identity();
 	Mat3 matrix = Mat3::identity();

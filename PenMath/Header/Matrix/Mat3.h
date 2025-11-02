@@ -1,7 +1,7 @@
 #pragma once 
 
 #define VECTOR3_CAST
-#include <Vector/Vector3/Vector3.h>
+#include <Vector/Vector3/Vector3.hpp>
 
 #if defined(MAT3_INITIALIZER)
 	#include <initializer_list>
@@ -152,7 +152,7 @@ namespace PenMath
 		/// <summary>
 		///	Get the Co-factors matrix (Replace element of the matrix by its cofactor)
 		/// </summary>
-		/// <returns>The minor matrix</returns>
+		/// <returns>The cofactors matrix</returns>
 		Mat3		getCofactors(void) const;									
 
 		/// <summary>

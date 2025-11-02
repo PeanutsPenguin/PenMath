@@ -1,7 +1,10 @@
 #include "PenMath.h"
 #include <stdio.h>
 
-void print()
+int main()
 {
-	printf("omg");
+	printf("ok test");
+
+	return 0;
 }
+

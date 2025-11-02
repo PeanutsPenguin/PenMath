@@ -58,7 +58,7 @@ namespace PenMath
 		/// <summary>
 		/// Replace all values in the matrix by 0
 		/// </summary>
-		Mat2& clear(void);
+		Mat2& empty(void);
 
 		/// <summary>
 		/// Return the transpose of the matrix

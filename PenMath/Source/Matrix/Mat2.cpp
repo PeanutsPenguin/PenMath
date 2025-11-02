@@ -60,7 +60,7 @@ namespace PenMath
 		return *this;
 	}
 
-	Mat2& Mat2::clear(void)
+	Mat2& Mat2::empty(void)
 	{
 		for (size_t i = 0; i < 2; ++i)
 			for (size_t j = 0; j < 2; ++j)

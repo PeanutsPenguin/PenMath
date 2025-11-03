@@ -17,7 +17,7 @@
 #endif
 
 #if defined(LERP_VECTOR4)
-	#include "Vector/Vector3/Vector3.h"
+	#include "Vector/Vector4/Vector4.h"
 #endif
 
 namespace PenMath

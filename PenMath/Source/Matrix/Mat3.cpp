@@ -2,9 +2,6 @@
 
 #include "Matrix/Mat2.h"
 
-//TODO : REMOVE WHEN I'LL HAVE MY OWN COS, SIN AND TAN
-#include <cmath>
-
 using namespace PenMath;
 
 #pragma region CONSTRUCTORS
@@ -349,21 +346,21 @@ Mat3 Mat3::rotate(const Vector2f& rotator)
 	Mat3 rotate = Mat3::identity();
 	Mat3 matrix = Mat3::identity();
 
-	matrix[1][1] = std::cosf(rotator[0]);
-	matrix[2][2] = std::cosf(rotator[0]);
+	matrix[1][1] = cos(rotator[0]);
+	matrix[2][2] = cos(rotator[0]);
 
-	matrix[2][1] = std::sinf(rotator[0]);
-	matrix[1][2] = -std::sinf(rotator[0]);
+	matrix[2][1] = sin(rotator[0]);
+	matrix[1][2] = -sin(rotator[0]);
 
 	rotate *= matrix;
 
 	matrix.toIdentity();
 
-	matrix[0][0] = std::cosf(rotator[1]);
-	matrix[2][2] = std::cosf(rotator[1]);
+	matrix[0][0] = cos(rotator[1]);
+	matrix[2][2] = cos(rotator[1]);
 
-	matrix[0][2] = -std::sinf(rotator[1]);
-	matrix[2][0] = std::sinf(rotator[1]);
+	matrix[0][2] = -sin(rotator[1]);
+	matrix[2][0] = sin(rotator[1]);
 
 	rotate *= matrix;
 	return rotate;

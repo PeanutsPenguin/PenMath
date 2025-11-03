@@ -4,8 +4,6 @@
 	#include "Matrix/Mat4.h"
 #endif
 
-#include <cmath>
-
 using namespace PenMath;
 
 #pragma region CONSTRUCTORS
@@ -243,7 +241,7 @@ bool Quaternion::isUnit() const
 float Quaternion::magnitude() const
 {
 	float const mSquared = this->magnitudeSquared();
-	return almostEqual(mSquared, 1.f) ? 1.f : std::sqrtf(mSquared);
+	return almostEqual(mSquared, 1.f) ? 1.f : squareRoot(mSquared);
 }
 
 float Quaternion::magnitudeSquared() const 
@@ -321,10 +319,10 @@ Quaternion Quaternion::slerp(const Quaternion& quatA, const Quaternion& quatB, f
 
 	if (RawCosom < 1.f)
 	{
-		float const Omega = std::acos(RawCosom);
-		float const InvSin = 1.f / std::sin(Omega);
-		Scale0 = std::sin(Scale0 * Omega) * InvSin;
-		Scale1 = std::sin(Scale1 * Omega) * InvSin;
+		float const Omega = acos(RawCosom);
+		float const InvSin = 1.f / sin(Omega);
+		Scale0 = sin(Scale0 * Omega) * InvSin;
+		Scale1 = sin(Scale1 * Omega) * InvSin;
 	}
 
 	return quatA * Scale0 + quatB * Scale1;

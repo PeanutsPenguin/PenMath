@@ -11,11 +11,6 @@
 	#include <Vector/Vector3/Vector3.h>
 #endif
 
-#if defined(VECTOR4_ANGLE)
-	#include <cmath>
-	#include <Angle/Radian.h>
-#endif
-
 namespace PenMath
 {
 #pragma region CONSTRUCTORS

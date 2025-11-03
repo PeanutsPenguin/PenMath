@@ -3,9 +3,6 @@
 #define VECTOR3_CAST
 #include "Matrix/Mat3.h"
 
-//TODO : REMOVE WHEN I'LL HAVE MY OWN COS, SIN AND TAN
-#include <cmath>
-
 using namespace PenMath;
 #pragma region CONSTRUCTORS
 Mat4::Mat4(float value)
@@ -262,8 +259,8 @@ Mat4 Mat4::rotate(const Vector3f& rotator)
 	Mat4 rotate = Mat4::identity();
 	Mat4 matrix = Mat4::identity();
 
-	float c = std::cosf(rotator[0]);
-	float s = std::sinf(rotator[0]);
+	float c = cos(rotator[0]);
+	float s = sin(rotator[0]);
 
 	matrix[1][1] = c;
 	matrix[2][2] = c;
@@ -275,8 +272,8 @@ Mat4 Mat4::rotate(const Vector3f& rotator)
 
 	matrix.toIdentity();
 
-	c = std::cosf(rotator[1]);
-	s = std::sinf(rotator[1]);
+	c = cos(rotator[1]);
+	s = sin(rotator[1]);
 
 	matrix[0][0] = c;
 	matrix[2][2] = c;
@@ -288,8 +285,8 @@ Mat4 Mat4::rotate(const Vector3f& rotator)
 
 	matrix.toIdentity();
 
-	c = std::cosf(rotator[2]);
-	s = std::sinf(rotator[2]);
+	c = cos(rotator[2]);
+	s = sin(rotator[2]);
 
 	matrix[0][0] = c;
 	matrix[1][1] = c;
@@ -315,7 +312,7 @@ Mat4 Mat4::Perspective(float fov, float aspect, float near, float far)
 {
 	Mat4 matrix = Mat4::zero();
 
-	const float S = std::tan(fov / 2.f);
+	const float S = tan(fov / 2.f);
 
 	matrix[0][0] = 1.f / (aspect * S);
 	matrix[1][1] = 1.f / (S);

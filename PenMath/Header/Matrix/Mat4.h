@@ -4,11 +4,11 @@
 #include "Vector/Vector4/Vector4.hpp"
 
 #if defined(MAT4_INITIALIZER)
-	#include <initializer_list>
+#include <initializer_list>
 #endif
 
 #if defined(MAT4_DEBUG)
-	#include <ostream>
+#include <ostream>
 #endif
 
 namespace PenMath
@@ -35,10 +35,10 @@ namespace PenMath
 		Mat4(const Vector4f a, const Vector4f b, const Vector4f c, const Vector4f d);
 
 #if defined(MAT4_INITIALIZER)
-		Mat4::Mat4(std::initializer_list<float> values)
+		Mat4(std::initializer_list<float> values)
 		{
 			size_t index = 0;
-			for (auto& element : initList)
+			for (auto& element : values)
 			{
 				for (int jindex = 0; jindex < 4; ++jindex)
 					this->m_matrix[index][jindex] = std::move(element);
@@ -64,6 +64,8 @@ namespace PenMath
 #pragma region OPERATORS
 		Mat4& operator=(const Mat4&) = default;															//Operator equal with any other 4 by 4 matrix
 
+		bool operator!=(const Mat4&) const = default;													//Operator == with any other 4 by 4 matrix
+
 		bool operator==(const Mat4&) const = default;													//Operator == with any other 4 by 4 matrix
 
 		Mat4& operator=(Mat4&&) = default;																//Move operator equal fir any ither 4 by 4 matrix
@@ -83,7 +85,7 @@ namespace PenMath
 		Mat4 operator+(const Mat4& rhs) const;															//Operator + with any other 4 by 4 matrix
 
 		Mat4& operator+=(const Mat4& rhs);																//Operator += with any ther 4 by 4 matrix
-			
+
 		Mat4 operator-(const Mat4& rhs) const;															//Operator - with any other 4 by 4 matrix
 
 		Mat4& operator-=(const Mat4& rhs);																//Operator -= with any other 4 by 4 matrix
@@ -93,12 +95,12 @@ namespace PenMath
 		/// <summary>
 		/// Change the matrix in an identity matrix
 		/// </summary>
-		Mat4& toIdentity(void);		
+		Mat4& toIdentity(void);
 
 		/// <summary>
 		/// Fill the matrix with 0
 		/// </summary>
-		Mat4& empty(void);											
+		Mat4& empty(void);
 
 		/// <summary>
 		/// Return the transpose matrix (inverse rows and columns)
@@ -113,7 +115,7 @@ namespace PenMath
 		/// <summary>
 		/// Get the determinant of the matrix
 		/// </summary>
-		float getDeterminant(void) const;													
+		float getDeterminant(void) const;
 
 		/// <summary>
 		/// Get the minor matrix with specified column and rows
@@ -132,7 +134,7 @@ namespace PenMath
 		///	Get the Co-factors matrix (Replace element of the matrix by its cofactor)
 		/// </summary>
 		/// <returns>The cofactors matrix</returns>
-		Mat4 getCofactors(void) const;										
+		Mat4 getCofactors(void) const;
 
 		/// <summary>
 		///	Get the inverse matrix (AB and BA are equals)
@@ -150,9 +152,9 @@ namespace PenMath
 		static Mat4 translate(const Vector3f& translator);
 
 		/// <summary>
-		/// Return a rotate matrix with the given Vector2
+		/// Return a rotate matrix with the given Vector3 (angles in radians, only ONE axis at the time)
 		/// </summary>
-		/// <param name="rotator">Values of the rotate</param>
+		/// <param name="rotator">Values of the rotate (give only ONE axis)</param>
 		/// <returns>A rotate Matrix</returns>
 		static Mat4 rotate(const Vector3f& rotator);
 

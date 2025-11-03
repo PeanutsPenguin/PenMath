@@ -2,6 +2,7 @@
 #include <Vector/Vector2/Vector2.h>
 #include <Arithmetic.h>
 
+
 #if defined (VECTOR2_CAST)
 	#include <Vector/Vector3/Vector3.h>
 	#include <Vector/Vector4/Vector4.h>
@@ -9,7 +10,7 @@
 
 #if defined(VECTOR2_ANGLE)
 	#include <Angle/Radian.h>
-	#include <cmath>
+	#include "Trigonometry.h"
 #endif
 
 
@@ -281,7 +282,7 @@ namespace PenMath
 	}
 	#pragma endregion
 
-	#pragma region FUNC
+#pragma region FUNC
 	TEMPLATE
 	_Type VEC2::magnitude(void) const 
 	{
@@ -326,7 +327,7 @@ namespace PenMath
 	}
 	#pragma endregion
 
-	#pragma region STATIC_FUNC
+#pragma region STATIC_FUNC
 	TEMPLATE
 	_Type VEC2::distance(const VEC2& vecA, const VEC2& vecB)
 	{
@@ -378,13 +379,13 @@ namespace PenMath
 
 #pragma endregion
 
-	#pragma region ANGLE
+#pragma region ANGLE
 #if defined(VECTOR2_ANGLE)
 
 	TEMPLATE
 	inline Radian VEC2::angle(const Vector<2, _Type>& vecA, const Vector<2, _Type>& vecB)
 	{
-		return Radian(std::acos(VEC2::dot(VEC2::normal(vecA), VEC2::normal(vecB))));
+		return Radian(acos(VEC2::dot(VEC2::normal(vecA), VEC2::normal(vecB))));
 	}
 
 	TEMPLATE
@@ -395,8 +396,8 @@ namespace PenMath
 		float pointc = vecB.x - vecC.x;
 		float pointd = vecB.y - vecC.y;
 
-		Radian atanA = std::atan2(pointa, pointb);
-		Radian atanB = std::atan2(pointc, pointd);
+		Radian atanA = atan2(pointa, pointb);
+		Radian atanB = atan2(pointc, pointd);
 
 		return atanB - atanA;
 	}

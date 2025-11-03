@@ -1,5 +1,5 @@
 #pragma once
-#include <Vector/Vector3/Vector3.h>
+#include "Vector/Vector3/Vector3.h"
 
 #include "Arithmetic.h"
 #include "Trigonometry.h"
@@ -8,13 +8,12 @@
 #define VEC3 Vector<3, _Type>
 
 #if defined (VECTOR3_CAST)
-	#include <Vector/Vector2/Vector2.h>
-	#include <Vector/Vector4/Vector4.h>
+	#include "Vector/Vector2/Vector2.h"
+	#include "Vector/Vector4/Vector4.h"
 #endif
 
 #if defined(VECTOR3_ANGLE)
-	#include <cmath>
-	#include <Angle/Radian.h>
+	#include "Angle/Radian.h"
 #endif
 
 namespace PenMath
@@ -434,10 +433,7 @@ namespace PenMath
 
 		float value = VEC3::dot(normA, normB);
 
-		if (std::isnan(value))
-			return Radian(-1.f);
-
-		return Radian(std::acos(value));
+		return Radian(acos(value));
 	}
 
 	TEMPLATE
@@ -454,7 +450,7 @@ namespace PenMath
 	{
 		float dot = VEC3::dot(*this, other);
 		float magnitudeDenom = (this->magnitude() * other.magnitude());
-		float limitedAngle = std::acosf(dot / magnitudeDenom);
+		float limitedAngle = acos(dot / magnitudeDenom);
 
 		if (!range)
 		{
@@ -464,7 +460,7 @@ namespace PenMath
 		float cross = VEC3::cross(*this, other).Magnitude();
 
 		float radian;
-		if (std::asinf(cross / magnitudeDenom) < 0)
+		if (asin(cross / magnitudeDenom) < 0)
 		{
 			radian = c_2pi - limitedAngle;
 			return Radian(radian);
@@ -476,14 +472,14 @@ namespace PenMath
 	TEMPLATE
 	void VEC3::rotate(const Radian& xRot, const Radian& yRot, const Radian& zRot)
 	{
-		float cosZ = std::cosf(zRot.raw());
-		float sinZ = std::sinf(zRot.raw());
+		float cosZ = cos(zRot.raw());
+		float sinZ = sin(zRot.raw());
 
-		float cosX = std::cosf(xRot.raw());
-		float sinX = std::sinf(xRot.raw());
+		float cosX = cos(xRot.raw());
+		float sinX = sin(xRot.raw());
 
-		float cosY = std::cosf(yRot.raw());
-		float sinY = std::sinf(yRot.raw());
+		float cosY = cos(yRot.raw());
+		float sinY = sin(yRot.raw());
 
 		float tempX = this->x * (cosZ * cosY + sinZ * sinX * sinY)
 			+ this->y * (-cosZ * sinY + sinZ * sinX * cosY)
@@ -503,8 +499,8 @@ namespace PenMath
 	TEMPLATE
 	void VEC3::rotate(const Radian& angle, const VEC3& other)
 	{
-		float cosR = std::cosf(angle.raw());
-		float sinR = std::sinf(angle.raw());
+		float cosR = cos(angle.raw());
+		float sinR = sin(angle.raw());
 
 		VEC3 unitOther;
 

@@ -1,12 +1,20 @@
 #pragma once 
+#define QUATERNION_CAST
 
 #include <Vector/Vector3/Vector3.hpp>
 #include <Vector/Vector4/Vector4.hpp>
 
+#if defined(QUATERNION_DEBUG)
+	#include <ostream>
+#endif
+
 namespace PenMath
 {
+	class Mat4;
+
 	/// <summary>
-	/// This class will include <Vector3.h>, <Vector4.h> and <cmath.h>
+	/// This class will include <Vector3.h>, <Vector4.h>
+	/// It'll compile <cmath> but will nor include it
 	/// </summary>
 	struct Quaternion
 	{
@@ -17,6 +25,9 @@ namespace PenMath
 		Quaternion(Quaternion const& other) = default;
 		Quaternion(Quaternion&& other) = default;
 
+		/// <summary>
+		/// x, y, z, w
+		/// </summary>
 		Quaternion(const Vector4f&);
 
 		/// <summary>
@@ -161,7 +172,9 @@ namespace PenMath
 		#pragma region CAST
 
 #if defined(QUATERNION_CAST)
-		//TODO Quaternion to rotate matrix 
+		static Mat4 Matrix(Quaternion const& quat);
+
+		static Mat4 Rotation(Quaternion quat);
 #endif
 
 		#pragma endregion
@@ -170,4 +183,13 @@ namespace PenMath
 		float z;
 		float w;
 	};
+
+#if defined(QUATERNION_DEBUG)
+	std::ostream& operator<<(std::ostream& os, const Quaternion& quat)
+	{
+		os << "Quaternion(" << quat.x << ", " << quat.y << ", " << quat.z << ", " << quat.w << ")";
+		return os;
+	}
+#endif
+
 }

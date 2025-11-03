@@ -4,11 +4,11 @@
 #include "Vector/Vector4/Vector4.hpp"
 
 #if defined(MAT4_INITIALIZER)
-#include <initializer_list>
+	#include <initializer_list>
 #endif
 
 #if defined(MAT4_DEBUG)
-#include <ostream>
+	#include <ostream>
 #endif
 
 namespace PenMath

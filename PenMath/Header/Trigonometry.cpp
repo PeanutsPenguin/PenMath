@@ -20,7 +20,7 @@ float PenMath::sin(float angle)
 
 float PenMath::cos(float angle)
 {
-    return sin(angle + c_2pi);
+    return sin(angle + c_halfPi);
 }
 
 float PenMath::tan(float angle)

@@ -6,6 +6,12 @@
 namespace PenMath
 {
 	/// <summary>
+	/// Return the absolute value of a float
+	/// </summary>
+	float absolute(float value);
+
+
+	/// <summary>
 	/// Return true when values are equal to 10^-6
 	/// </summary>
 	/// <param name="a">: First number</param>

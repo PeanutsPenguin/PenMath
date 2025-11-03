@@ -1,7 +1,8 @@
 #pragma once
 #include <Vector/Vector3/Vector3.h>
 
-#include <Arithmetic.h>
+#include "Arithmetic.h"
+#include "Trigonometry.h"
 
 #define TEMPLATE template<typename _Type>
 #define VEC3 Vector<3, _Type>
@@ -324,7 +325,7 @@ namespace PenMath
 	TEMPLATE
 	void VEC3::normalize(void)
 	{
-		return this->operator/(this->magnitude());
+		*this = this->operator/(this->magnitude());
 	}
 
 	TEMPLATE
@@ -434,7 +435,7 @@ namespace PenMath
 		float value = VEC3::dot(normA, normB);
 
 		if (std::isnan(value))
-			std::cerr << "__FUNCTION__ : Dot product of normal(vecA) and normal(vecB) = nan\n";
+			return Radian(-1.f);
 
 		return Radian(std::acos(value));
 	}
@@ -465,7 +466,7 @@ namespace PenMath
 		float radian;
 		if (std::asinf(cross / magnitudeDenom) < 0)
 		{
-			radian = g_2pi - limitedAngle;
+			radian = c_2pi - limitedAngle;
 			return Radian(radian);
 		}
 

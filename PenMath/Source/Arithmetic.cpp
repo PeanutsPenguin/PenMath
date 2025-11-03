@@ -2,6 +2,10 @@
 
 namespace PenMath
 {
+	float absolute(float value)
+	{
+		return (value < 0) ? -value : value;
+	}
 	bool almostEqual(float valueA, float valueB)
 	{
 		return FLOAT_EQ(valueA, valueB);
@@ -39,16 +43,17 @@ namespace PenMath
 	{
 		if (exponent == 0)
 			return 1.f;
-		else if (value == 0)
-			return 0.f;
 
-		float result = value;
-		for (int i = 1; i < exponent; i++)
-		{
+		bool neg = (exponent < 0);
+
+		int e = neg ? -exponent : exponent;
+
+		float result = 1.f;
+
+		for (int i = 0; i < e; ++i)
 			result *= value;
-		}
 
-		return result;
+		return neg ? (1.f / result) : result;
 	}
 
 	//Check this video if you want to rly understand this non-sense : https://youtu.be/p8u_k2LIZyo
@@ -88,15 +93,19 @@ namespace PenMath
 			mantissa *= 2;
 		}
 
-		float y = (1 + mantissa) / 2; // first approximation
+		float y = (1 + mantissa) * 0.5f; // first approximation
 		float z = 0;
 
-		while (y != z) {    // yes, we CAN compare doubles here!
+		const int maxIter = 128;
+		int iter = 0;
+
+		while (absolute(y - z) > EPSILON && iter < maxIter) {
 			z = y;
-			y = (y + mantissa / y) / 2;
+			y = (y + mantissa / y) * 0.5f;
+			++iter;
 		}
 
-		return assembleFloat(y, exp / 2); // multiply answer by 2^(exp/2)}
+		return assembleFloat(y, exp * .5f); // multiply answer by 2^(exp/2)}
 	}
 }
 

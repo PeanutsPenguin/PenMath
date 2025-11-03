@@ -262,31 +262,40 @@ Mat4 Mat4::rotate(const Vector3f& rotator)
 	Mat4 rotate = Mat4::identity();
 	Mat4 matrix = Mat4::identity();
 
-	matrix[1][1] = std::cosf(rotator[0]);
-	matrix[2][2] = std::cosf(rotator[0]);
+	float c = std::cosf(rotator[0]);
+	float s = std::sinf(rotator[0]);
 
-	matrix[2][1] = std::sinf(rotator[0]);
-	matrix[1][2] = -std::sinf(rotator[0]);
+	matrix[1][1] = c;
+	matrix[2][2] = c;
 
-	rotate *= matrix;
-
-	matrix.toIdentity();
-
-	matrix[0][0] = std::cosf(rotator[1]);
-	matrix[2][2] = std::cosf(rotator[1]);
-
-	matrix[0][2] = -std::sinf(rotator[1]);
-	matrix[2][0] = std::sinf(rotator[1]);
+	matrix[1][2] = s;
+	matrix[2][1] = -s;
 
 	rotate *= matrix;
 
 	matrix.toIdentity();
 
-	matrix[0][0] = std::cosf(rotator[2]);
-	matrix[1][1] = std::cosf(rotator[2]);
+	c = std::cosf(rotator[1]);
+	s = std::sinf(rotator[1]);
 
-	matrix[0][1] = std::sinf(rotator[2]);
-	matrix[1][0] = -std::sinf(rotator[2]);
+	matrix[0][0] = c;
+	matrix[2][2] = c;
+
+	matrix[0][2] = -s;
+	matrix[2][0] = s;
+
+	rotate *= matrix;
+
+	matrix.toIdentity();
+
+	c = std::cosf(rotator[2]);
+	s = std::sinf(rotator[2]);
+
+	matrix[0][0] = c;
+	matrix[1][1] = c;
+
+	matrix[0][1] = s;
+	matrix[1][0] = -s;
 
 	rotate *= matrix;
 	return rotate;
@@ -322,7 +331,9 @@ Mat4 Mat4::LookAt(const Vector3f& eye, const Vector3f& center, const Vector3f& u
 	Mat4 mat = Mat4::identity();
 
 	Vector3f f = Vector3f::normal(center - eye);
+
 	Vector3f s = Vector3f::normal(Vector3f::cross(up, f));
+
 	Vector3f u = Vector3f::cross(f, s);
 
 	mat[0][0] = s.x;
@@ -363,15 +374,13 @@ Mat4 Mat4::Ortho(float left, float right, float bottom, float top, float far, fl
 
 	mat[0][0] = 2.f / (right - left);
 	mat[1][1] = 2.f / (top - bottom);
-	mat[2][2] = -2.f / (far - near);
+	mat[2][2] = 2.f / (far - near);
 	mat[3][0] = -(right + left) / (right - left);
 	mat[3][1] = -(top + bottom) / (top - bottom);
 	mat[3][2] = -(far + near) / (far - near);
 
 	return mat;
 }
-
-
 #pragma endregion
 
 Vector4f operator*(const Vector4f& vec, const Mat4& mat)

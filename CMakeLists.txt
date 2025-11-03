@@ -1,40 +1,38 @@
-#PenMath RootCmake
-cmake_minimum_required(VERSION 3.24 FATAL_ERROR) # PATH_EQUAL
+# PenMath Root CMake
+cmake_minimum_required(VERSION 3.24 FATAL_ERROR)
 
 get_filename_component(PROJECT_NAME ${CMAKE_CURRENT_SOURCE_DIR} NAME)
+
+project(${PROJECT_NAME} VERSION 1.0.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-project(${PROJECT_NAME} VERSION 1.0.0 LANGUAGES CXX)
-
 set(TARGET_NAME ${PROJECT_NAME})
 
-#Headers
+# Headers
 file(GLOB_RECURSE TARGET_HEADER_FILES 
-	${CMAKE_CURRENT_SOURCE_DIR}/*.h
-	${CMAKE_CURRENT_SOURCE_DIR}/*.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/*.inl)
+    ${CMAKE_CURRENT_SOURCE_DIR}/Header/*.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/Header/*.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Header/*.inl
+)
 list(FILTER TARGET_HEADER_FILES EXCLUDE REGEX ${CMAKE_CURRENT_BINARY_DIR})
 
-#Sources
+# Sources
 file(GLOB_RECURSE TARGET_SOURCE_FILES 
-	${CMAKE_CURRENT_SOURCE_DIR}/*.c
-	${CMAKE_CURRENT_SOURCE_DIR}/*.cc # C with classe
-	${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/*.cxx
-	${CMAKE_CURRENT_SOURCE_DIR}/*.c++)
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.cxx
+    ${CMAKE_CURRENT_SOURCE_DIR}/Source/*.c++
+)
 list(FILTER TARGET_SOURCE_FILES EXCLUDE REGEX ${CMAKE_CURRENT_BINARY_DIR})
 
-#Target files
 set(TARGET_FILES ${TARGET_HEADER_FILES} ${TARGET_SOURCE_FILES})
-source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TARGET_FILES}) # generate visual studio filter
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${TARGET_FILES})
 
-#Static library
-add_library(${TARGET_NAME} STATIC)
-target_sources(${TARGET_NAME} PRIVATE ${TARGET_FILES})
-
-install(TARGETS ${TARGET_NAME} EXPORT PenMathEx)
+# Library
+add_library(${TARGET_NAME} STATIC ${TARGET_FILES})
 
 target_include_directories(${TARGET_NAME}
     PUBLIC
@@ -42,36 +40,22 @@ target_include_directories(${TARGET_NAME}
         $<INSTALL_INTERFACE:include>
 )
 
+# Installation rules
+include(GNUInstallDirs)
+install(TARGETS ${TARGET_NAME}
+    EXPORT PenMathEx
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+)
 
-function(add_source_group_dir path)
-  set(headerDir "${CMAKE_CURRENT_SOURCE_DIR}/Header/${path}")
-  set(sourceDir "${CMAKE_CURRENT_SOURCE_DIR}/Source/${path}")
-  file(GLOB headerFiles LIST_DIRECTORIES false "${headerDir}/*")
-  file(GLOB sourceFiles LIST_DIRETORIES false "${sourceDir}/*")
-
-  source_group("${path}/Header" FILES ${headerFiles})
-  source_group("${path}/Source" FILES ${sourceFiles})
-
-  file(GLOB children RELATIVE "${headerDir}" "${headerDir}/*")
-  foreach(child ${children})
-    if(IS_DIRECTORY "${headerDir}/${child}")
-      add_source_group_dir("${path}/${child}")
-    endif()
-  endforeach()
-endfunction()
-
-file(GLOB children RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}/Header" "${CMAKE_CURRENT_SOURCE_DIR}/Header/*")
-foreach(child ${children})
-  if(IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/Header/${child}")
-    add_source_group_dir("${child}")
-  endif()
-endforeach()
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/Header/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 install(
-	EXPORT PenMathEx
-    	FILE PenMathLib.cmake
-    	NAMESPACE PenMath::
-    	DESTINATION ${CMAKE_INSTALL_LIBDIR}/PenMath
+    EXPORT PenMathEx
+    FILE PenMathLib.cmake
+    NAMESPACE PenMath::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/PenMath
 )
 
 include(CMakePackageConfigHelpers)
@@ -81,12 +65,19 @@ write_basic_package_version_file(
     COMPATIBILITY AnyNewerVersion
 )
 
-configure_file(PenMathConfig.cmake.in
+configure_file(
+    PenMathConfig.cmake.in
     "${CMAKE_CURRENT_BINARY_DIR}/PenMathConfig.cmake"
+    @ONLY
 )
 
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/PenMathConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/PenMathConfigVersion.cmake"
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/PenMath
+)
 
-
+# Optional: Visual Studio startup project
 if(MSVC)
-	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT PenMath)
+    set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${TARGET_NAME})
 endif()

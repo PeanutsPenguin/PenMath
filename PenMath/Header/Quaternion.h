@@ -1,5 +1,4 @@
 #pragma once 
-#define QUATERNION_CAST
 
 #include <Vector/Vector3/Vector3.hpp>
 #include <Vector/Vector4/Vector4.hpp>
@@ -136,6 +135,12 @@ namespace PenMath
 		/// Rotates a 3D point with the quaternion (Returns the new point)
 		/// </summary>
 		Vector3f rotate(const Vector3f&) const;
+
+		void setRotationEuler(const PenMath::Vector3f& angles);
+
+		Vector3f getRotationEuler() const noexcept;
+
+		Quaternion fromAxis(const Vector3f& axis, float angle);
 
 		#pragma endregion
 

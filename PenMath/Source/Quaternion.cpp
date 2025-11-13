@@ -1,4 +1,5 @@
 #include "Quaternion.h"
+#include "Trigonometry.h"
 
 #if defined(QUATERNION_CAST)
 	#include "Matrix/Mat4.h"
@@ -273,6 +274,42 @@ Vector3f Quaternion::rotate(const Vector3f& vec) const
 	Vector3f uuv = Vector3f::cross(quatVector, uv);
 
 	return	vec + ((uv *this->w) + uuv) * 2;
+}
+
+void Quaternion::setRotationEuler(const PenMath::Vector3f& angles)
+{
+	Quaternion qX = this->fromAxis(Vector3f::Right(), angles.x);
+	Quaternion qY = this->fromAxis(Vector3f::Up(), angles.y);
+	Quaternion qZ = this->fromAxis(Vector3f::Front(), angles.z);
+
+	*this = qZ * qY * qX;
+}
+
+Vector3f Quaternion::getRotationEuler() const noexcept
+{
+	Vector3f result;
+	Quaternion quat = Quaternion::normal(*this);
+
+	// roll (x-axis rotation)
+	double sinr_cosp = 2 * (quat.w * quat.x + quat.y * quat.z);
+	double cosr_cosp = 1 - 2 * (quat.x * quat.x + quat.y * quat.y);
+	result.x = atan2(sinr_cosp, cosr_cosp);
+
+	// pitch (y-axis rotation)
+	double sinp = squareRoot(1 + 2 * (quat.w * quat.y - quat.x * quat.z));
+	double cosp = squareRoot(1 - 2 * (quat.w * quat.y - quat.x * quat.z));
+	result.y = 2 * atan2(sinp, cosp) - c_pi / 2;
+
+	// yaw (z-axis rotation)
+	double siny_cosp = 2 * (quat.w * quat.z + quat.x * quat.y);
+	double cosy_cosp = 1 - 2 * (quat.y * quat.y + quat.z * quat.z);
+	result.z = atan2(siny_cosp, cosy_cosp);
+
+	result.x = (result.x * 180 / c_pi);
+	result.y = (result.y * 180 / c_pi);
+	result.z = (result.z * 180 / c_pi);
+
+	return result;
 }
 
 #pragma endregion

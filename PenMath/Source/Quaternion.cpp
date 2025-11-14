@@ -312,6 +312,16 @@ Vector3f Quaternion::getRotationEuler() const noexcept
 	return result;
 }
 
+Quaternion Quaternion::fromAxis(const Vector3f& axis, float angle)
+{
+	float halfAngle = angle * 0.5;
+
+	float  sinHalf = PenMath::sin(halfAngle);
+	float  cosHalf = PenMath::cos(halfAngle);
+
+	return Quaternion(axis * sinHalf, cosHalf);
+}
+
 #pragma endregion
 
 #pragma region STATIC_FUNC

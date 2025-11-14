@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Vector/Vector3/Vector3.h"
+#define QUATERNION_CAST
 #include "Quaternion.h"
+
 #include "Matrix/Mat4.h"
 
 namespace PenMath

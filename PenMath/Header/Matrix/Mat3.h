@@ -1,7 +1,8 @@
 #pragma once 
 
 #define VECTOR3_CAST
-#include <Vector/Vector3/Vector3.hpp>
+#include <Vector/Vector3/Vector3.h>
+#include <Vector/Vector2/Vector2.h>
 
 #if defined(MAT3_INITIALIZER)
 	#include <initializer_list>

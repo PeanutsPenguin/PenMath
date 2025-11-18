@@ -7,6 +7,10 @@
 	#include <ostream>
 #endif
 
+#if defined(QUATERNION_CAST)
+	#include "Matrix/Mat4.h"
+#endif
+
 namespace PenMath
 {
 	class Mat4;
@@ -177,9 +181,40 @@ namespace PenMath
 		#pragma region CAST
 
 #if defined(QUATERNION_CAST)
-		static Mat4 Matrix(Quaternion const& quat);
+		static Mat4 Matrix(Quaternion const& quat) 
+		{
+			return Mat4(
+				Vector4f(quat.w, -quat.x, -quat.y, -quat.z), Vector4f(quat.x, quat.w, -quat.z, quat.y),
+				Vector4f(quat.y, quat.z, quat.w, -quat.x), Vector4f(quat.z, -quat.y, quat.x, quat.w));
+		}
 
-		static Mat4 Rotation(Quaternion quat);
+		static Mat4 Rotation(Quaternion quat) 
+		{
+			if (!Quaternion::isUnit(quat))
+			{
+				quat = Quaternion::normal(quat);
+			}
+
+			float const aSquared = quat.w * quat.w;
+			float const bSquared = quat.x * quat.x;
+			float const cSquared = quat.y * quat.y;
+			float const dSquared = quat.z * quat.z;
+
+			float const ab = quat.w * quat.x;
+			float const ac = quat.w * quat.y;
+			float const ad = quat.w * quat.z;
+
+			float const bc = quat.x * quat.y;
+			float const bd = quat.x * quat.z;
+
+			float const cd = quat.y * quat.z;
+
+			return Mat4(
+				Vector4f(aSquared + bSquared - cSquared - dSquared, 2.f * (ad + bc), 2.f * (bd - ac), 0.f),
+				Vector4f(2.f * (bc - ad), aSquared - bSquared + cSquared - dSquared, 2.f * (ab + cd), 0.f),
+				Vector4f(2.f * (ac + bd), 2.f * (cd - ab), aSquared - bSquared - cSquared + dSquared, 0.f),
+				Vector4f(0, 0, 0, 0));
+		}
 #endif
 
 		#pragma endregion

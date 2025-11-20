@@ -11,7 +11,7 @@ namespace PenMath
 	struct Transform
 	{
 		PenMath::Vector3f position;
-		PenMath::Vector3f scale;
+		PenMath::Vector3f scale = Vector3f::One();
 		PenMath::Quaternion rotation;
 
 		_NODISCARD Mat4 toMatrix() const noexcept;

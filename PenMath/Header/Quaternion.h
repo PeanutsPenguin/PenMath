@@ -213,7 +213,7 @@ namespace PenMath
 				Vector4f(aSquared + bSquared - cSquared - dSquared, 2.f * (ad + bc), 2.f * (bd - ac), 0.f),
 				Vector4f(2.f * (bc - ad), aSquared - bSquared + cSquared - dSquared, 2.f * (ab + cd), 0.f),
 				Vector4f(2.f * (ac + bd), 2.f * (cd - ab), aSquared - bSquared - cSquared + dSquared, 0.f),
-				Vector4f(0, 0, 0, 0));
+				Vector4f(0, 0, 0, 1));
 		}
 #endif
 

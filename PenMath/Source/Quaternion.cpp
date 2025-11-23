@@ -4,7 +4,7 @@
 using namespace PenMath;
 
 #pragma region CONSTRUCTORS
-Quaternion::Quaternion() : x(0), y(0), z(0), w(0) {}
+Quaternion::Quaternion() : x(0), y(0), z(0), w(1) {}
 
 Quaternion::Quaternion(const Vector4f& vec) : x(vec.x), y(vec.y), z(vec.z), w(vec.w) {}
 

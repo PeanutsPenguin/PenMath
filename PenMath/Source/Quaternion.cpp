@@ -175,7 +175,7 @@ Quaternion Quaternion::operator*(const Quaternion & toMultiply) const
 Quaternion& Quaternion::operator*=(const Quaternion & toMultiply)
 {
 	Quaternion result = *this * toMultiply;
-	memcpy(this, &result, sizeof(result));
+	*this = result;
 	return *this;
 }
 

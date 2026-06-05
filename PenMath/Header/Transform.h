@@ -20,6 +20,12 @@ namespace PenMath
 
 		_NODISCARD Transform combine(const Transform& otherTransform) const;
 
+		_NODISCARD PenMath::Vector3f getForward() const;
+
+		_NODISCARD PenMath::Vector3f getUp() const;
+
+		_NODISCARD PenMath::Vector3f getRight() const;
+
 		_NODISCARD bool operator==(const Transform& rvalue) const noexcept = default;
 		_NODISCARD bool operator!=(const Transform& rvalue) const noexcept = default;
 	};

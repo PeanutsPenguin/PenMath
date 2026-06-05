@@ -22,7 +22,7 @@ Transform Transform::inverse() const
     return result;
 }
 
-Transform PenMath::Transform::combine(const Transform& otherTransform) const
+Transform Transform::combine(const Transform& otherTransform) const
 {
     Transform result;
 
@@ -33,3 +33,29 @@ Transform PenMath::Transform::combine(const Transform& otherTransform) const
     return result;
 }
 
+Vector3f Transform::getForward() const
+{
+    return PenMath::Vector3f(
+        2.0f * (this->rotation.x * this->rotation.z + this->rotation.w * this->rotation.y),         //x
+        2.0f * (this->rotation.y * this->rotation.z - this->rotation.w * this->rotation.x),         //y
+        1.0f - 2.0f * (this->rotation.x * this->rotation.x + this->rotation.y * this->rotation.y)   //z
+    );
+}
+
+Vector3f Transform::getUp() const
+{
+	return PenMath::Vector3f(
+		2.0f * (this->rotation.x * this->rotation.y - this->rotation.w * this->rotation.z),         //x
+		1.0f - 2.0f * (this->rotation.x * this->rotation.x + this->rotation.z * this->rotation.z),  //y
+		2.0f * (this->rotation.y * this->rotation.z + this->rotation.w * this->rotation.x)          //z
+	);
+}
+
+Vector3f Transform::getRight() const
+{
+	return PenMath::Vector3f(
+		1.0f - 2.0f * (this->rotation.y * this->rotation.y + this->rotation.z * this->rotation.z),  //x
+		2.0f * (this->rotation.x * this->rotation.y + this->rotation.w * this->rotation.z),         //y
+		2.0f * (this->rotation.x * this->rotation.z - this->rotation.w * this->rotation.y)          //z
+	);
+}

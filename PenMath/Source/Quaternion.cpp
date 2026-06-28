@@ -56,35 +56,35 @@ const float& Quaternion::operator[](size_t index) const
 
 Quaternion Quaternion::operator-(void) const
 {
-	return Quaternion(-this->w , -this->x, -this->y, -this->z);
+	return Quaternion(-this->w, -this->x, -this->y, -this->z);
 }
 
-bool Quaternion::operator==(const Quaternion & toCompare) const
+bool Quaternion::operator==(const Quaternion& toCompare) const
 {
 	return this->x == toCompare.x && this->y == toCompare.y && this->z == toCompare.z && this->w == toCompare.w;
 }
 
-bool Quaternion::operator!=(const Quaternion & toCompare) const
+bool Quaternion::operator!=(const Quaternion& toCompare) const
 {
 	return this->x != toCompare.x || this->y != toCompare.y || this->z != toCompare.z || this->w != toCompare.w;
 }
 
-bool Quaternion::operator<(const Quaternion & toCompare) const
+bool Quaternion::operator<(const Quaternion& toCompare) const
 {
 	return this->magnitudeSquared() < toCompare.magnitudeSquared();
 }
 
-bool Quaternion::operator<=(const Quaternion & toCompare) const
+bool Quaternion::operator<=(const Quaternion& toCompare) const
 {
 	return this->magnitudeSquared() <= toCompare.magnitudeSquared();
 }
 
-bool Quaternion::operator>(const Quaternion & toCompare) const
+bool Quaternion::operator>(const Quaternion& toCompare) const
 {
 	return this->magnitudeSquared() > toCompare.magnitudeSquared();
 }
 
-bool Quaternion::operator>=(const Quaternion & toCompare) const
+bool Quaternion::operator>=(const Quaternion& toCompare) const
 {
 	return this->magnitudeSquared() >= toCompare.magnitudeSquared();
 }
@@ -107,12 +107,12 @@ Quaternion& Quaternion::operator--(void)
 	return *this;
 }
 
-Quaternion Quaternion::operator+(const Quaternion & toAdd) const
+Quaternion Quaternion::operator+(const Quaternion& toAdd) const
 {
 	return Quaternion(this->w + toAdd.w, this->x + toAdd.x, this->y + toAdd.y, this->z + toAdd.z);
 }
 
-Quaternion& Quaternion::operator+=(const Quaternion & toAdd)
+Quaternion& Quaternion::operator+=(const Quaternion& toAdd)
 {
 	this->x += toAdd.x;
 	this->y += toAdd.y;
@@ -135,12 +135,12 @@ Quaternion& Quaternion::operator+=(float toAdd)
 	return *this;
 }
 
-Quaternion Quaternion::operator-(const Quaternion & toSubtract) const
+Quaternion Quaternion::operator-(const Quaternion& toSubtract) const
 {
 	return Quaternion(this->w - toSubtract.w, this->x - toSubtract.x, this->y - toSubtract.y, this->z - toSubtract.z);
 }
 
-Quaternion& Quaternion::operator-=(const Quaternion & toSubtract)
+Quaternion& Quaternion::operator-=(const Quaternion& toSubtract)
 {
 	this->x -= toSubtract.x;
 	this->y -= toSubtract.y;
@@ -163,16 +163,18 @@ Quaternion& Quaternion::operator-=(float toSubtract)
 	return *this;
 }
 
-Quaternion Quaternion::operator*(const Quaternion & toMultiply) const
+Quaternion Quaternion::operator*(const Quaternion& toMultiply) const
 {
 	Vector3f const lhsIm = Vector3f(this->x, this->y, this->z);
 	Vector3f const rhsIm = Vector3f(toMultiply.x, toMultiply.y, toMultiply.z);
 
-	return Quaternion(rhsIm * this->w + lhsIm * toMultiply.w + Vector3f::cross(lhsIm, rhsIm), 
-		this->w * toMultiply.w - Vector3f::dot(lhsIm, rhsIm));
+	float const newW = this->w * toMultiply.w - Vector3f::dot(lhsIm, rhsIm);
+	Vector3f const newIm = rhsIm * this->w + lhsIm * toMultiply.w + Vector3f::cross(lhsIm, rhsIm);
+
+	return Quaternion(newW, newIm.x, newIm.y, newIm.z);
 }
 
-Quaternion& Quaternion::operator*=(const Quaternion & toMultiply)
+Quaternion& Quaternion::operator*=(const Quaternion& toMultiply)
 {
 	Quaternion result = *this * toMultiply;
 	*this = result;
@@ -193,12 +195,12 @@ Quaternion& Quaternion::operator*=(float toMultiply)
 	return *this;
 }
 
-Quaternion Quaternion::operator/(const Quaternion & toDivide) const
+Quaternion Quaternion::operator/(const Quaternion& toDivide) const
 {
 	return Quaternion(this->w / toDivide.w, this->x / toDivide.x, this->y / toDivide.y, this->z / toDivide.z);
 }
 
-Quaternion& Quaternion::operator/=(const Quaternion & toDivide)
+Quaternion& Quaternion::operator/=(const Quaternion& toDivide)
 {
 	this->x /= toDivide.x;
 	this->y /= toDivide.y;
@@ -226,11 +228,11 @@ Quaternion& Quaternion::operator/=(float toDivide)
 
 void Quaternion::normalize()
 {
-	if(!almostEqual(this->magnitudeSquared(), 1.f))
+	if (!almostEqual(this->magnitudeSquared(), 1.f))
 		*this /= this->magnitude();
 }
 
-bool Quaternion::isUnit() const 
+bool Quaternion::isUnit() const
 {
 	return almostEqual(this->magnitudeSquared(), 1.f);
 }
@@ -241,7 +243,7 @@ float Quaternion::magnitude() const
 	return almostEqual(mSquared, 1.f) ? 1.f : squareRoot(mSquared);
 }
 
-float Quaternion::magnitudeSquared() const 
+float Quaternion::magnitudeSquared() const
 {
 	return this->x * this->x + this->y * this->y + this->z * this->z + this->w * this->w;
 }
@@ -255,11 +257,10 @@ void Quaternion::conjugate(void)
 
 void Quaternion::inverse(void)
 {
-	float const magnitude = this->magnitude();
-	float const mult = almostEqual(magnitude, 1.f) ? 1.f : 1.f / magnitude;
+	float const mSquared = this->magnitudeSquared();
+	float const mult = almostEqual(mSquared, 1.f) ? 1.f : 1.f / mSquared;
 
 	this->conjugate();
-
 	*this *= mult;
 }
 
@@ -269,14 +270,14 @@ Vector3f Quaternion::rotate(const Vector3f& vec) const
 	Vector3f uv = Vector3f::cross(quatVector, vec);
 	Vector3f uuv = Vector3f::cross(quatVector, uv);
 
-	return	vec + ((uv *this->w) + uuv) * 2;
+	return	vec + ((uv * this->w) + uuv) * 2;
 }
 
 void Quaternion::setRotationEuler(const PenMath::Vector3f& angles)
 {
-	Quaternion qX = this->fromAxis(Vector3f::Right(), angles.x);
-	Quaternion qY = this->fromAxis(Vector3f::Up(), angles.y);
-	Quaternion qZ = this->fromAxis(Vector3f::Front(), angles.z);
+	Quaternion qX = this->fromAxis(Vector3f::Right(), angles.x * (PenMath::c_pi / 180.f));
+	Quaternion qY = this->fromAxis(Vector3f::Up(), angles.y * (PenMath::c_pi / 180.f));
+	Quaternion qZ = this->fromAxis(Vector3f::Front(), angles.z * (PenMath::c_pi / 180.f));
 
 	*this = qZ * qY * qX;
 }
@@ -339,8 +340,9 @@ Quaternion Quaternion::conjugate(const Quaternion& quat)
 
 Quaternion Quaternion::inverse(const Quaternion& quat)
 {
-	float const magnitude = quat.magnitude();
-	float const mult = almostEqual(magnitude, 1.f) ? 1.f : 1.f / magnitude;
+
+	float const mSquared = quat.magnitudeSquared();
+	float const mult = almostEqual(mSquared, 1.f) ? 1.f : 1.f / mSquared;
 
 	return Quaternion::conjugate(quat) * mult;
 }
